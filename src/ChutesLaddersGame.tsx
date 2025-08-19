@@ -187,8 +187,8 @@ const ChutesLaddersGame: React.FC = () => {
         src={`/dice-${value}.svg`} 
         alt={`Dice ${value}`}
         style={{ 
-          width: '18px', 
-          height: '18px',
+          width: '95%', 
+          height: '95%',
           filter: 'brightness(0) saturate(100%)' // Makes SVG black
         }}
       />
