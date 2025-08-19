@@ -265,7 +265,7 @@ const ChutesLaddersGame: React.FC = () => {
       
       // Gradually bias toward final value, with final value guaranteed in last few iterations
       let randomValue;
-      if (i >= changeIntervals.length - 2) {
+      if (i >= changeIntervals.length) {
         // Last two iterations: always show final value
         randomValue = finalValue;
       } else if (i >= changeIntervals.length - 3) {
