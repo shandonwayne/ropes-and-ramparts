@@ -255,27 +255,35 @@ const ChutesLaddersGame: React.FC = () => {
     const finalValue = Math.floor(Math.random() * 6) + 1;
     setDiceValue(finalValue); // Set the dice value that will be used for movement
     
-    // Animate dice face changes during rolling (faster changes at start, slower at end)
+    // Animate dice face changes during rolling with smooth transition to final value
     const rollDuration = 2200; // 2.2 seconds total
-    const changeIntervals = [120, 140, 160, 180, 220, 260, 320, 400]; // Smoother progression
+    const changeIntervals = [120, 140, 160, 180, 220, 260, 320, 400, 500]; // Extended for smoother end
     let currentTime = 0;
     
-    for (let i = 0; i < changeIntervals.length && currentTime < rollDuration - 500; i++) {
+    for (let i = 0; i < changeIntervals.length; i++) {
       await new Promise(resolve => setTimeout(resolve, changeIntervals[i]));
       currentTime += changeIntervals[i];
       
-      // Show random dice faces during rolling, but bias toward final value near the end
-      const randomValue = i >= changeIntervals.length - 2 
-        ? (Math.random() < 0.8 ? finalValue : Math.floor(Math.random() * 6) + 1)
-        : Math.floor(Math.random() * 6) + 1;
+      // Gradually bias toward final value, with final value guaranteed in last few iterations
+      let randomValue;
+      if (i >= changeIntervals.length - 2) {
+        // Last two iterations: always show final value
+        randomValue = finalValue;
+      } else if (i >= changeIntervals.length - 4) {
+        // Second-to-last iterations: heavily bias toward final value
+        randomValue = Math.random() < 0.9 ? finalValue : Math.floor(Math.random() * 6) + 1;
+      } else if (i >= changeIntervals.length - 6) {
+        // Earlier iterations: moderate bias toward final value
+        randomValue = Math.random() < 0.6 ? finalValue : Math.floor(Math.random() * 6) + 1;
+      } else {
+        // Early iterations: completely random
+        randomValue = Math.floor(Math.random() * 6) + 1;
+      }
       
       setActiveDiceValue(randomValue);
     }
     
-    // Wait for the main rolling animation to complete
-    await new Promise(resolve => setTimeout(resolve, rollDuration - currentTime));
-    
-    // Set final value and start settling animation
+    // Ensure final value is set (should already be set from loop)
     setActiveDiceValue(finalValue);
     
     // Store the roll for the current player
