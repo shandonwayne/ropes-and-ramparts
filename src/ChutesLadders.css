@@ -372,6 +372,16 @@ body {
   transform-style: preserve-3d;
 }
 
+/* Move active player dice up */
+.player-panel.active .player-dice {
+  transform: translateY(-30px);
+}
+
+/* Ensure hover effect still works for active dice */
+.player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
+  transform: translateY(-32px) scale(1.05) rotateX(-5deg) rotateY(5deg);
+}
+
 /* Enhanced disabled state transition */
 .player-dice:disabled {
   opacity: 0.6;
