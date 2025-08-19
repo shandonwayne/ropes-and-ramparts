@@ -471,7 +471,7 @@ const ChutesLaddersGame: React.FC = () => {
                   width: '100%', 
                   height: '100%', 
                   objectFit: 'contain',
-                  display: currentPlayerIndex === 0 ? 'none' : 'block'
+                  display: currentPlayerIndex !== 0 ? 'block' : 'none'
                 }}
               />
               {/* Active Rowan - placeholder for now */}
@@ -534,7 +534,7 @@ const ChutesLaddersGame: React.FC = () => {
                   width: '100%', 
                   height: '100%', 
                   objectFit: 'contain',
-                  display: currentPlayerIndex === 1 ? 'none' : 'block'
+                  display: currentPlayerIndex !== 1 ? 'block' : 'none'
                 }}
               />
               {/* Active Isolde */}
