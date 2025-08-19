@@ -420,10 +420,34 @@ const ChutesLaddersGame: React.FC = () => {
                   key={player.id}
                   className={`player-piece player-${player.id}`}
                   style={{ 
-                    backgroundColor: player.id === 1 ? 'var(--Tangerine)' : 'var(--Pink)',
-                    border: '2px solid white'
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    width: '24px',
+                    height: '24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}
                 >
+                  {player.id === 1 ? (
+                    <div style={{
+                      width: '20px',
+                      height: '20px',
+                      backgroundColor: 'var(--Tangerine)',
+                      borderRadius: '50%',
+                      border: '2px solid white'
+                    }} />
+                  ) : (
+                    <img 
+                      src="/IsolderPlayerToken.svg" 
+                      alt="Lady Isolde Token"
+                      style={{ 
+                        width: '100%', 
+                        height: '100%',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  )}
                 </div>
               ))}
             </div>
