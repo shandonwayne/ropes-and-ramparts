@@ -430,13 +430,15 @@ const ChutesLaddersGame: React.FC = () => {
                   }}
                 >
                   {player.id === 1 ? (
-                    <div style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: 'var(--Tangerine)',
-                      borderRadius: '50%',
-                      border: '2px solid white'
-                    }} />
+                    <img 
+                      src="/RowanPlayerToken.svg" 
+                      alt="Sir Rowan Token"
+                      style={{ 
+                        width: '100%', 
+                        height: '100%',
+                        objectFit: 'contain'
+                      }}
+                    />
                   ) : (
                     <img 
                       src="/IsolderPlayerToken.svg" 
