@@ -227,7 +227,7 @@ body {
 
 /* Player 1 dice faces - Tangerine */
 .player-panel:nth-child(1) .dice-face {
-  background: var(--Tangerine);
+  background: #FFBC2E;
 }
 
 /* Player 2 dice faces - Pink */
