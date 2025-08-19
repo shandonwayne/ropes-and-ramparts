@@ -279,21 +279,12 @@ body {
 }
 
 /* Dice symbols styling */
-.dice-face svg {
+.dice-face img {
   width: 18px;
   height: 18px;
-  color: var(--Black);
-  stroke-width: 2.5;
+  filter: brightness(0) saturate(100%); /* Makes SVG black */
 }
 
-/* Player-specific symbol colors */
-.player-panel:nth-child(1) .dice-face svg {
-  color: var(--Black);
-}
-
-.player-panel:nth-child(3) .dice-face svg {
-  color: var(--Black);
-}
 
 .player-dice:hover:not(:disabled) {
   transform: translateY(-2px);

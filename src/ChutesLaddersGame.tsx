@@ -182,9 +182,17 @@ const ChutesLaddersGame: React.FC = () => {
 
   // Get dice icon component based on value
   const getDiceIcon = (value: number) => {
-    const icons = [Dice1, Dice2, Dice3, Dice4, Dice5, Dice6];
-    const IconComponent = icons[value - 1];
-    return <IconComponent size={24} />;
+    return (
+      <img 
+        src={`/dice-${value}.svg`} 
+        alt={`Dice ${value}`}
+        style={{ 
+          width: '18px', 
+          height: '18px',
+          filter: 'brightness(0) saturate(100%)' // Makes SVG black
+        }}
+      />
+    );
   };
 
   // Convert position to board coordinates (handling snake pattern)
