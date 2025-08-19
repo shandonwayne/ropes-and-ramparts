@@ -47,6 +47,8 @@ const ChutesLaddersGame: React.FC = () => {
   const [diceValue, setDiceValue] = useState(1);
   const [activeDiceValue, setActiveDiceValue] = useState(1);
   const [inactiveDiceValue, setInactiveDiceValue] = useState(1);
+  const [player1LastRoll, setPlayer1LastRoll] = useState(1);
+  const [player2LastRoll, setPlayer2LastRoll] = useState(1);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
   const [isRolling, setIsRolling] = useState(false);
@@ -156,6 +158,22 @@ const ChutesLaddersGame: React.FC = () => {
 
   // Render complete 3D dice with all 6 faces
   const render3DDice = (activeValue: number, inactiveValue: number, isActive: boolean) => {
+    // For inactive players, show flat SVG instead of 3D dice
+    if (!isActive) {
+      const lastRollValue = currentPlayerIndex === 0 ? player2LastRoll : player1LastRoll;
+      return (
+        <img 
+          src={`/dice-${lastRollValue}.svg`} 
+          alt={`Dice ${lastRollValue}`}
+          style={{ 
+            width: '95%', 
+            height: '95%',
+            filter: 'brightness(0) saturate(100%)' // Makes SVG black
+          }}
+        />
+      );
+    }
+    
     const currentValue = isActive ? activeValue : inactiveValue;
     
     // Define all 6 face values (opposite faces add up to 7)
@@ -257,6 +275,14 @@ const ChutesLaddersGame: React.FC = () => {
     
     // Set final value and start settling animation
     setActiveDiceValue(finalValue);
+    
+    // Store the roll for the current player
+    if (currentPlayerIndex === 0) {
+      setPlayer1LastRoll(finalValue);
+    } else {
+      setPlayer2LastRoll(finalValue);
+    }
+    
     setIsRolling(false);
     setIsSettling(true);
     
@@ -331,6 +357,8 @@ const ChutesLaddersGame: React.FC = () => {
     setCurrentPlayerIndex(0);
     setActiveDiceValue(1);
     setInactiveDiceValue(1);
+    setPlayer1LastRoll(1);
+    setPlayer2LastRoll(1);
     setGameOver(false);
     setWinner(null);
     setIsRolling(false);
