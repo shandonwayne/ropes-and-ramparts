@@ -256,7 +256,7 @@ const ChutesLaddersGame: React.FC = () => {
     setDiceValue(finalValue); // Set the dice value that will be used for movement
     
     // Animate dice face changes during rolling with smooth transition to final value
-    const rollDuration = 2200; // 2.2 seconds total
+    const rollDuration = 2000; // 2.2 seconds total
     const changeIntervals = [120, 140, 160, 180, 220, 260, 320]; // Removed last interval to prevent jump
     let currentTime = 0;
     
