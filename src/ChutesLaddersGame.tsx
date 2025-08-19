@@ -283,8 +283,6 @@ const ChutesLaddersGame: React.FC = () => {
       setActiveDiceValue(randomValue);
     }
     
-    // Don't set the final value again - it's already set in the loop
-    
     // Store the roll for the current player
     if (currentPlayerIndex === 0) {
       setPlayer1LastRoll(finalValue);
