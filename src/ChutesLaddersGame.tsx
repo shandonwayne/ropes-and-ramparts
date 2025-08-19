@@ -228,17 +228,17 @@ const ChutesLaddersGame: React.FC = () => {
     const finalValue = Math.floor(Math.random() * 6) + 1;
     
     // Animate dice face changes during rolling (faster changes at start, slower at end)
-    const rollDuration = 2500; // 2.5 seconds total
-    const changeIntervals = [100, 120, 150, 200, 250, 300, 400, 500]; // Progressively slower
+    const rollDuration = 2200; // 2.2 seconds total
+    const changeIntervals = [120, 140, 160, 180, 220, 260, 320, 400]; // Smoother progression
     let currentTime = 0;
     
-    for (let i = 0; i < changeIntervals.length && currentTime < rollDuration - 600; i++) {
+    for (let i = 0; i < changeIntervals.length && currentTime < rollDuration - 500; i++) {
       await new Promise(resolve => setTimeout(resolve, changeIntervals[i]));
       currentTime += changeIntervals[i];
       
       // Show random dice faces during rolling, but bias toward final value near the end
       const randomValue = i >= changeIntervals.length - 2 
-        ? (Math.random() < 0.7 ? finalValue : Math.floor(Math.random() * 6) + 1)
+        ? (Math.random() < 0.8 ? finalValue : Math.floor(Math.random() * 6) + 1)
         : Math.floor(Math.random() * 6) + 1;
       
       setActiveDiceValue(randomValue);
@@ -253,7 +253,7 @@ const ChutesLaddersGame: React.FC = () => {
     setIsSettling(true);
     
     // Wait for settling animation to complete
-    await new Promise(resolve => setTimeout(resolve, 600));
+    await new Promise(resolve => setTimeout(resolve, 500));
     setIsSettling(false);
     
     // Move current player
