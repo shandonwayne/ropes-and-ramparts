@@ -282,7 +282,6 @@ body {
 .dice-face img {
   width: 95%;
   height: 95%;
-  filter: brightness(0) saturate(100%); /* Makes SVG black */
 }
 
 
