@@ -279,7 +279,7 @@ const ChutesLaddersGame: React.FC = () => {
         randomValue = Math.floor(Math.random() * 6) + 1; 
       }
       
-      setActiveDiceValue(randomValue);
+      // setActiveDiceValue(randomValue); 
     }
     
     // Use the final value that was set in the animation loop
