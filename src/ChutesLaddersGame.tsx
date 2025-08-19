@@ -463,10 +463,27 @@ const ChutesLaddersGame: React.FC = () => {
               <img src="/SirRowan-Name.svg" alt="Sir Rowan" style={{ width: '100%', height: 'auto' }} />
             </div>
             <div className="character-illustration">
+              {/* Inactive Rowan */}
               <img 
-                src={currentPlayerIndex === 0 ? "/SirRowan.svg" : "/SirRowan.svg"} 
+                src="/SirRowan.svg" 
                 alt="Sir Rowan" 
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'contain',
+                  display: currentPlayerIndex === 0 ? 'none' : 'block'
+                }}
+              />
+              {/* Active Rowan - placeholder for now */}
+              <img 
+                src="/SirRowan.svg" 
+                alt="Sir Rowan Active" 
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'contain',
+                  display: currentPlayerIndex === 0 ? 'block' : 'none'
+                }}
               />
             </div>
             <div className="player-info-display">
@@ -509,10 +526,27 @@ const ChutesLaddersGame: React.FC = () => {
               <img src="/LadyIsolde-Name.svg" alt="Lady Isolde" style={{ width: '100%', height: 'auto' }} />
             </div>
             <div className="character-illustration">
+              {/* Inactive Isolde */}
               <img 
-                src={currentPlayerIndex === 1 ? "/Isolde-Final-Active.svg" : "/Isolde.svg"} 
+                src="/Isolde.svg" 
                 alt="Lady Isolde" 
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'contain',
+                  display: currentPlayerIndex === 1 ? 'none' : 'block'
+                }}
+              />
+              {/* Active Isolde */}
+              <img 
+                src="/Isolde-Final-Active.svg" 
+                alt="Lady Isolde Active" 
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'contain',
+                  display: currentPlayerIndex === 1 ? 'block' : 'none'
+                }}
               />
             </div>
             <div className="player-info-display">
