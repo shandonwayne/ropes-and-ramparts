@@ -73,7 +73,7 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: var(--space-xl);
-  background: var(--Wyrmwood);
+  background: #5B4B3D;
 }
 
 /* Game Header */
