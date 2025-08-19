@@ -462,7 +462,13 @@ const ChutesLaddersGame: React.FC = () => {
             <div className="player-title">
               <img src="/SirRowan-Name.svg" alt="Sir Rowan" style={{ width: '100%', height: 'auto' }} />
             </div>
-            <div className="character-illustration Rowan"></div>
+            <div className="character-illustration">
+              <img 
+                src={currentPlayerIndex === 0 ? "/SirRowan.svg" : "/SirRowan.svg"} 
+                alt="Sir Rowan" 
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
+            </div>
             <div className="player-info-display">
               {/* <div className="player-position">Position: {players[0].position}</div> */} 
             </div>
@@ -502,7 +508,13 @@ const ChutesLaddersGame: React.FC = () => {
             <div className="player-title">
               <img src="/LadyIsolde-Name.svg" alt="Lady Isolde" style={{ width: '100%', height: 'auto' }} />
             </div>
-            <div className="character-illustration Isolde"></div>
+            <div className="character-illustration">
+              <img 
+                src={currentPlayerIndex === 1 ? "/Isolde-Final-Active.svg" : "/Isolde.svg"} 
+                alt="Lady Isolde" 
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
+            </div>
             <div className="player-info-display">
               {/* <div className="player-position">Position: {players[1].position}</div> */} 
             </div>
