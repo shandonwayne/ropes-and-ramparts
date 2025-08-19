@@ -168,7 +168,6 @@ const ChutesLaddersGame: React.FC = () => {
           style={{ 
             width: '95%', 
             height: '95%',
-            filter: 'brightness(0) saturate(100%)', // Makes SVG black
             backgroundColor: '#3A342E', // Iron background
             borderRadius: 'var(--border-radius)'
           }}
