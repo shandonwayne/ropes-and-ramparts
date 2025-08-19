@@ -257,7 +257,7 @@ const ChutesLaddersGame: React.FC = () => {
     
     // Animate dice face changes during rolling with smooth transition to final value
     const rollDuration = 2200; // 2.2 seconds total
-    const changeIntervals = [120, 140, 160, 180, 220, 260, 320, 400, 500]; // Extended for smoother end
+    const changeIntervals = [120, 140, 160, 180, 220, 260, 320, 400]; // Removed extra interval
     let currentTime = 0;
     
     for (let i = 0; i < changeIntervals.length; i++) {
@@ -266,14 +266,14 @@ const ChutesLaddersGame: React.FC = () => {
       
       // Gradually bias toward final value, with final value guaranteed in last few iterations
       let randomValue;
-      if (i >= changeIntervals.length - 2) {
-        // Last two iterations: always show final value
+      if (i >= changeIntervals.length - 1) {
+        // Last iteration: always show final value
         randomValue = finalValue;
-      } else if (i >= changeIntervals.length - 4) {
-        // Second-to-last iterations: heavily bias toward final value
+      } else if (i >= changeIntervals.length - 2) {
+        // Second-to-last iteration: heavily bias toward final value
         randomValue = Math.random() < 0.9 ? finalValue : Math.floor(Math.random() * 6) + 1;
-      } else if (i >= changeIntervals.length - 6) {
-        // Earlier iterations: moderate bias toward final value
+      } else if (i >= changeIntervals.length - 3) {
+        // Third-to-last iteration: moderate bias toward final value
         randomValue = Math.random() < 0.6 ? finalValue : Math.floor(Math.random() * 6) + 1;
       } else {
         // Early iterations: completely random
@@ -283,8 +283,7 @@ const ChutesLaddersGame: React.FC = () => {
       setActiveDiceValue(randomValue);
     }
     
-    // Ensure final value is set (should already be set from loop)
-    setActiveDiceValue(finalValue);
+    // Don't set the final value again - it's already set in the loop
     
     // Store the roll for the current player
     if (currentPlayerIndex === 0) {
