@@ -514,17 +514,6 @@ const ChutesLaddersGame: React.FC = () => {
           </div>
         </div>
       )}
-      {/*  
-      <div className="game-legend">
-        <div className="legend-item">
-          <span className="chute-symbol">🐍</span>
-          <span>Chute (slide down)</span>
-        </div>
-        <div className="legend-item">
-          <span className="ladder-symbol">🪜</span>
-          <span>Ladder (climb up)</span>
-        </div>
-      </div> */}
     </div>
   );
 };
