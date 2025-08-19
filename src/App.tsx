@@ -4,7 +4,7 @@ import ChutesLaddersGame from './ChutesLaddersGame';
 
 function App() {
   return (
-    <div className="min-h-screen" style={{ background: 'var(--Wyrmwood)' }}>
+    <div className="min-h-screen" style={{ background: '#5B4B3D' }}>
       <ChutesLaddersGame />
     </div>
   );
