@@ -275,8 +275,8 @@ const ChutesLaddersGame: React.FC = () => {
         // Fourth-to-last iteration: moderate bias toward final value
         randomValue = Math.random() < 0.6 ? finalValue : Math.floor(Math.random() * 6) + 1;
       } else {
-        // // Early iterations: completely random
-        // randomValue = Math.floor(Math.random() * 6) + 1; 
+        // Early iterations: completely random
+        randomValue = Math.floor(Math.random() * 6) + 1; 
       }
       
       setActiveDiceValue(randomValue);
