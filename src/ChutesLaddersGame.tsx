@@ -422,8 +422,8 @@ const ChutesLaddersGame: React.FC = () => {
                   style={{ 
                     backgroundColor: 'transparent',
                     border: 'none',
-                    width: '24px',
-                    height: '24px',
+                    width: '80%',
+                    height: '80%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
@@ -431,8 +431,8 @@ const ChutesLaddersGame: React.FC = () => {
                 >
                   {player.id === 1 ? (
                     <div style={{
-                      width: '20px',
-                      height: '20px',
+                      width: '100%',
+                      height: '100%',
                       backgroundColor: 'var(--Tangerine)',
                       borderRadius: '50%',
                       border: '2px solid white'
