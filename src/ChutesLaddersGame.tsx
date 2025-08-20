@@ -65,18 +65,15 @@ const ChutesLaddersGame: React.FC = () => {
     const calculateAllRopes = () => {
       if (!boardRef.current) return;
       
-      console.log('Calculating ropes...');
       const newRopePositions: Array<{start: number, end: number, style: React.CSSProperties}> = [];
       
       // Calculate chute connections (ramparts)
       Object.entries(GAME_CONFIG.chutes).forEach(([start, end]) => {
         const startPos = parseInt(start);
         const endPos = end;
-        console.log(`Calculating rampart from ${startPos} to ${endPos}`);
-        const ropePos = calculateEnhancedRopePosition(startPos, endPos);
+        const ropePos = calculateRopePosition(startPos, endPos);
         
         if (ropePos) {
-          console.log('Rampart position calculated:', ropePos);
           newRopePositions.push({
             start: startPos,
             end: endPos,
@@ -85,15 +82,14 @@ const ChutesLaddersGame: React.FC = () => {
               left: `${ropePos.left}px`,
               top: `${ropePos.top}px`,
               width: `${ropePos.width}px`,
-              height: '4px',
+              height: '8px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               zIndex: 100,
-              pointerEvents: 'none'
+              pointerEvents: 'none',
+              backgroundColor: 'red' // Temporary to see connections
             }
           });
-        } else {
-          console.log('No rampart position calculated for', startPos, endPos);
         }
       });
       
@@ -101,11 +97,9 @@ const ChutesLaddersGame: React.FC = () => {
       Object.entries(GAME_CONFIG.ladders).forEach(([start, end]) => {
         const startPos = parseInt(start);
         const endPos = end;
-        console.log(`Calculating rope from ${startPos} to ${endPos}`);
-        const ropePos = calculateEnhancedRopePosition(startPos, endPos);
+        const ropePos = calculateRopePosition(startPos, endPos);
         
         if (ropePos) {
-          console.log('Rope position calculated:', ropePos);
           newRopePositions.push({
             start: startPos,
             end: endPos,
@@ -114,70 +108,64 @@ const ChutesLaddersGame: React.FC = () => {
               left: `${ropePos.left}px`,
               top: `${ropePos.top}px`,
               width: `${ropePos.width}px`,
-              height: '4px',
+              height: '8px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              connectionType: 'ladder'
+              backgroundColor: 'blue' // Temporary to see connections
             }
           });
-        } else {
-          console.log('No rope position calculated for', startPos, endPos);
         }
       });
       
-      console.log('Setting rope positions:', newRopePositions);
       setRopePositions(newRopePositions);
     };
     
-    // Calculate positions after a short delay to ensure DOM is ready
-    const timer = setTimeout(calculateAllRopes, 500);
+    // Calculate positions after DOM is ready
+    const timer = setTimeout(calculateAllRopes, 100);
     
     return () => clearTimeout(timer);
-  }, [players]); // Recalculate when players move
 
   // Calculate rope connection positions
   const calculateRopePosition = (startPos: number, endPos: number) => {
     if (!boardRef.current) return null;
     
-    console.log('Looking for squares with positions:', startPos, endPos);
     const boardRect = boardRef.current.getBoundingClientRect();
     const squares = boardRef.current.querySelectorAll('.game-square');
-    console.log('Found squares:', squares.length);
     
-    const startSquare = Array.from(squares).find(square => 
-      parseInt((square as HTMLElement).dataset.position || '0') === startPos
-    ) as HTMLElement;
+    let startSquare: HTMLElement | null = null;
+    let endSquare: HTMLElement | null = null;
     
-    const endSquare = Array.from(squares).find(square => 
-      parseInt((square as HTMLElement).dataset.position || '0') === endPos
-    ) as HTMLElement;
+    // Find squares by their data-position attribute
+    squares.forEach(square => {
+      const position = parseInt((square as HTMLElement).dataset.position || '0');
+      if (position === startPos) startSquare = square as HTMLElement;
+      if (position === endPos) endSquare = square as HTMLElement;
+    });
     
-    console.log('Start square:', startSquare, 'End square:', endSquare);
-    
-    if (!startSquare || !endSquare) return null;
+    if (!startSquare || !endSquare) {
+      console.warn(`Could not find squares for positions ${startPos} -> ${endPos}`);
+      return null;
+    }
     
     const startRect = startSquare.getBoundingClientRect();
     const endRect = endSquare.getBoundingClientRect();
     
-    // Calculate center positions of squares relative to the board container
-    const startCenterX = startRect.left + startRect.width / 2 - boardRect.left;
-    const startCenterY = startRect.top + startRect.height / 2 - boardRect.top;
-    const endCenterX = endRect.left + endRect.width / 2 - boardRect.left;
-    const endCenterY = endRect.top + endRect.height / 2 - boardRect.top;
+    // Calculate exact center points relative to board
+    const startX = startRect.left + (startRect.width / 2) - boardRect.left;
+    const startY = startRect.top + (startRect.height / 2) - boardRect.top;
+    const endX = endRect.left + (endRect.width / 2) - boardRect.left;
+    const endY = endRect.top + (endRect.height / 2) - boardRect.top;
     
-    // Calculate the connection line
-    const deltaX = endCenterX - startCenterX;
-    const deltaY = endCenterY - startCenterY;
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
     const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
     
-    // Position the connection line to start from the center of start square
-    // and extend to the center of end square
     return {
-      left: startCenterX,
-      top: startCenterY,
+      left: startX,
+      top: startY,
       width: length,
       angle
     };
@@ -651,11 +639,21 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
                 style={rope.style}
               >
-                <img 
-                  src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
-                  alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
-                  className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
-                />
+                {GAME_CONFIG.chutes[rope.start] ? (
+                  <img 
+                    src="/Rampart.svg" 
+                    alt="rampart" 
+                    className="rampart-svg"
+                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
+                  />
+                ) : (
+                  <img 
+                    src="/rope.svg" 
+                    alt="rope" 
+                    className="rope-svg"
+                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
+                  />
+                )}
               </div>
             ))}
           </div>
