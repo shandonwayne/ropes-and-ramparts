@@ -56,6 +56,7 @@ const ChutesLaddersGame: React.FC = () => {
   const [isMoving, setIsMoving] = useState(false);
   const [ropePositions, setRopePositions] = useState<Array<{start: number, end: number, style: React.CSSProperties}>>([]);
   const [isoldeInFailureState, setIsoldeInFailureState] = useState(false);
+  const [rowanInFailureState, setRowanInFailureState] = useState(false);
   
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -253,6 +254,11 @@ const ChutesLaddersGame: React.FC = () => {
       setIsoldeInFailureState(false);
     }
     
+    // Reset Rowan's failure state when he rolls the dice
+    if (currentPlayerIndex === 0 && rowanInFailureState) {
+      setRowanInFailureState(false);
+    }
+    
     // Start rolling animation
     setIsRolling(true);
     setIsSettling(false);
@@ -338,6 +344,11 @@ const ChutesLaddersGame: React.FC = () => {
         setIsoldeInFailureState(true);
       }
       
+      // If it's Rowan (player 1) hitting a chute, set failure state
+      if (currentPlayer.id === 1) {
+        setRowanInFailureState(true);
+      }
+      
       newPosition = GAME_CONFIG.chutes[newPosition];
       
       setPlayers(prevPlayers => 
@@ -381,6 +392,7 @@ const ChutesLaddersGame: React.FC = () => {
     setPlayer1LastRoll(1);
     setPlayer2LastRoll(1);
     setIsoldeInFailureState(false);
+    setRowanInFailureState(false);
     setGameOver(false);
     setWinner(null);
     setIsRolling(false);
@@ -504,7 +516,7 @@ const ChutesLaddersGame: React.FC = () => {
             <div className="character-illustration">
               {/* Inactive Rowan */}
               <img 
-                src="/SirRowan.svg" 
+                src={rowanInFailureState ? "/Rowan-Failure.svg" : "/SirRowan.svg"}
                 alt="Sir Rowan" 
                 style={{ 
                   width: '100%', 
@@ -515,7 +527,7 @@ const ChutesLaddersGame: React.FC = () => {
               />
               {/* Active Rowan - placeholder for now */}
               <img 
-                src="/SirRowan.svg" 
+                src={rowanInFailureState ? "/Rowan-Failure.svg" : "/SirRowan.svg"}
                 alt="Sir Rowan Active" 
                 style={{ 
                   width: '100%', 
