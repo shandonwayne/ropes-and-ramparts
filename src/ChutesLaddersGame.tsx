@@ -55,6 +55,7 @@ const ChutesLaddersGame: React.FC = () => {
   const [isSettling, setIsSettling] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
   const [ropePositions, setRopePositions] = useState<Array<{start: number, end: number, style: React.CSSProperties}>>([]);
+  const [isoldeInFailureState, setIsoldeInFailureState] = useState(false);
   
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -326,6 +327,14 @@ const ChutesLaddersGame: React.FC = () => {
     // Check for chutes or ladders
     if (GAME_CONFIG.chutes[newPosition]) {
       await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // If it's Isolde (player 2) hitting a chute, set failure state
+      if (currentPlayer.id === 2) {
+        setIsoldeInFailureState(true);
+        // Reset failure state after 3 seconds
+        setTimeout(() => setIsoldeInFailureState(false), 3000);
+      }
+      
       newPosition = GAME_CONFIG.chutes[newPosition];
       
       setPlayers(prevPlayers => 
@@ -368,6 +377,7 @@ const ChutesLaddersGame: React.FC = () => {
     setInactiveDiceValue(1);
     setPlayer1LastRoll(1);
     setPlayer2LastRoll(1);
+    setIsoldeInFailureState(false);
     setGameOver(false);
     setWinner(null);
     setIsRolling(false);
@@ -554,7 +564,7 @@ const ChutesLaddersGame: React.FC = () => {
             <div className="character-illustration">
               {/* Inactive Isolde */}
               <img 
-                src="/Isolde.svg" 
+                src={isoldeInFailureState ? "/Isolde-Failure.svg" : "/Isolde.svg"}
                 alt="Lady Isolde" 
                 style={{ 
                   width: '100%', 
@@ -565,7 +575,7 @@ const ChutesLaddersGame: React.FC = () => {
               />
               {/* Active Isolde */}
               <img 
-                src="/Isolde-Final-Active.svg" 
+                src={isoldeInFailureState ? "/Isolde-Failure.svg" : "/Isolde-Final-Active.svg"}
                 alt="Lady Isolde Active" 
                 style={{ 
                   width: '100%', 
