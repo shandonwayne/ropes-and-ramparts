@@ -562,24 +562,24 @@ const ChutesLaddersGame: React.FC = () => {
     return gameRow * GAME_CONFIG.gridWidth + gameCol + 1;
   };
 
-// Get character image based on player state and activity
-const getCharacterImage = (playerId: number, isActive: boolean) => {
-  const playerState = playerId === 1 ? player1State : player2State;
-  
-  if (playerId === 1) {
-    // Sir Rowan
-    if (playerState === 'failure') {
-      return "/Rowan-Failure.svg";
+  // Get character image based on player state and activity
+  const getCharacterImage = (playerId: number, isActive: boolean) => {
+    const playerState = playerId === 1 ? player1State : player2State;
+    
+    if (playerId === 1) {
+      // Sir Rowan
+      if (playerState === 'failure') {
+        return "/Rowan-Failure.svg";
+      }
+      return "/SirRowan.svg"; // Default for both active and inactive
+    } else {
+      // Lady Isolde
+      if (playerState === 'failure') {
+        return "/Isolde-Failure.svg";
+      }
+      return isActive ? "/Isolde-Final-Active.svg" : "/Isolde.svg";
     }
-    return "/SirRowan.svg"; // Default for both active and inactive
-  } else {
-    // Lady Isolde
-    if (playerState === 'failure') {
-      return "/Isolde-Failure.svg";
-    }
-    return isActive ? "/Isolde-Final-Active.svg" : "/Isolde.svg";
-  }
-};
+  };
 
   return (
     <div className="game-container">
@@ -640,11 +640,21 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
                 style={rope.style}
               >
-                <img 
-                  src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
-                  alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
-                  className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
-                />
+                {GAME_CONFIG.chutes[rope.start] ? (
+                  <img 
+                    src="/Rampart.svg" 
+                    alt="rampart" 
+                    className="rampart-svg"
+                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
+                  />
+                ) : (
+                  <img 
+                    src="/rope.svg" 
+                    alt="rope" 
+                    className="rope-svg"
+                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
+                  />
+                )}
               </div>
             ))}
           </div>
