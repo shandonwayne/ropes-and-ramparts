@@ -496,18 +496,6 @@ const ChutesLaddersGame: React.FC = () => {
           >
             <span className="square-number">{gamePosition}</span>
             
-            {hasChute && (
-              <div className="chute-indicator">
-                🐍 → {hasChute}
-              </div>
-            )}
-            
-            {hasLadder && (
-              <div className="ladder-indicator">
-                🪜 → {hasLadder}
-              </div>
-            )}
-            
             <div className="players-container">
               {playersHere.map(player => (
                 <div
