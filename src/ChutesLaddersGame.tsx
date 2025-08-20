@@ -87,7 +87,6 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              backgroundColor: 'red' // Temporary to see connections
             }
           });
         }
@@ -113,7 +112,6 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              backgroundColor: 'blue' // Temporary to see connections
             }
           });
         }
