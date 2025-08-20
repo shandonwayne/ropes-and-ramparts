@@ -475,6 +475,9 @@ const ChutesLaddersGame: React.FC = () => {
   const renderBoard = () => {
     const squares = [];
     
+    // Find players at starting position (0)
+    const startingPlayers = players.filter(player => player.position === 0);
+    
     for (let row = 0; row < GAME_CONFIG.gridHeight; row++) {
       for (let col = 0; col < GAME_CONFIG.gridWidth; col++) {
         const squareNumber = row * GAME_CONFIG.gridWidth + col + 1;
@@ -543,7 +546,67 @@ const ChutesLaddersGame: React.FC = () => {
       }
     }
     
-    return squares;
+    return (
+      <>
+        {squares}
+        {/* Starting position for players at position 0 */}
+        {startingPlayers.length > 0 && (
+          <div
+            className="starting-position"
+            style={{
+              position: 'absolute',
+              bottom: '-60px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              gap: '10px',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 100
+            }}
+          >
+            {startingPlayers.map(player => (
+              <div
+                key={player.id}
+                className={`player-piece player-${player.id}`}
+                style={{ 
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 100
+                }}
+              >
+                {player.id === 1 ? (
+                  <img 
+                    src="/RowanPlayerToken.svg" 
+                    alt="Sir Rowan Token"
+                    style={{ 
+                      width: '100%', 
+                      height: '100%',
+                      objectFit: 'contain'
+                    }}
+                  />
+                ) : (
+                  <img 
+                    src="/IsolderPlayerToken.svg" 
+                    alt="Lady Isolde Token"
+                    style={{ 
+                      width: '100%', 
+                      height: '100%',
+                      objectFit: 'contain'
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    );
   };
 
   // Get game position from visual coordinates
