@@ -87,7 +87,7 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              backgroundColor: 'red' // Temporary to see connections
+              backgroundColor: '#FFBC2E' // Sunflower color for chutes
             }
           });
         }
@@ -113,7 +113,7 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              backgroundColor: 'blue' // Temporary to see connections
+              backgroundColor: '#808080' // Grey color for ladders
             }
           });
         }
