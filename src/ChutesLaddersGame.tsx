@@ -87,7 +87,7 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              background: 'linear-gradient(90deg, #F57B35, #FFBC2E)', // Tangerine to Sunflower gradient
+              background: 'linear-gradient(90deg,rgba(175, 176, 193, 1) 0%, rgba(175, 189, 193, 1) 75%, rgba(217, 217, 218, 1) 100%)', // Chute gradient
               borderRadius: '4px', // Rounded corners
               zIndex: 50 // Lower than player tokens
             }
