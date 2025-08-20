@@ -606,7 +606,6 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                   src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
                   alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
                   className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
-                  style={{ width: '100%', height: '100%' }} 
                 />
               </div>
             ))}
