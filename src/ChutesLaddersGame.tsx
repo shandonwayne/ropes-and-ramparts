@@ -646,6 +646,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                     objectFit: 'fill',
                     display: 'block'
                   }}
+                />
               </div>
             ))}
           </div>
