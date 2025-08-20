@@ -87,7 +87,8 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              backgroundColor: '#FFBC2E' // Sunflower color for chutes
+              backgroundColor: '#FFBC2E', // Sunflower color for chutes
+              zIndex: 50 // Lower than player tokens
             }
           });
         }
@@ -113,7 +114,8 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              backgroundColor: '#808080' // Grey color for ladders
+              backgroundColor: '#808080', // Grey color for ladders
+              zIndex: 50 // Lower than player tokens
             }
           });
         }
@@ -509,6 +511,7 @@ const ChutesLaddersGame: React.FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
+                    zIndex: 100 // Ensure tokens are above connections
                   }}
                 >
                   {player.id === 1 ? (
