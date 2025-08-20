@@ -126,6 +126,7 @@ const ChutesLaddersGame: React.FC = () => {
     const timer = setTimeout(calculateAllRopes, 100);
     
     return () => clearTimeout(timer);
+  }, []);
 
   // Calculate rope connection positions
   const calculateRopePosition = (startPos: number, endPos: number) => {
@@ -639,21 +640,11 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
                 style={rope.style}
               >
-                {GAME_CONFIG.chutes[rope.start] ? (
-                  <img 
-                    src="/Rampart.svg" 
-                    alt="rampart" 
-                    className="rampart-svg"
-                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
-                  />
-                ) : (
-                  <img 
-                    src="/rope.svg" 
-                    alt="rope" 
-                    className="rope-svg"
-                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
-                  />
-                )}
+                <img 
+                  src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
+                  alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
+                  className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
+                />
               </div>
             ))}
           </div>
