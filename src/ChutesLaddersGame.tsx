@@ -87,6 +87,7 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
+              backgroundColor: 'red' // Temporary to see connections
             }
           });
         }
@@ -112,6 +113,7 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
+              backgroundColor: 'blue' // Temporary to see connections
             }
           });
         }
@@ -130,8 +132,10 @@ const ChutesLaddersGame: React.FC = () => {
   const calculateRopePosition = (startPos: number, endPos: number) => {
     if (!boardRef.current) return null;
     
+    console.log('Looking for squares with positions:', startPos, endPos);
     const boardRect = boardRef.current.getBoundingClientRect();
     const squares = boardRef.current.querySelectorAll('.game-square');
+    console.log('Found squares:', squares.length);
     
     const startSquare = Array.from(squares).find(square => 
       parseInt((square as HTMLElement).dataset.position || '0') === startPos
@@ -140,6 +144,8 @@ const ChutesLaddersGame: React.FC = () => {
     const endSquare = Array.from(squares).find(square => 
       parseInt((square as HTMLElement).dataset.position || '0') === endPos
     ) as HTMLElement;
+    
+    console.log('Start square:', startSquare, 'End square:', endSquare);
     
     if (!startSquare || !endSquare) return null;
     
@@ -158,8 +164,8 @@ const ChutesLaddersGame: React.FC = () => {
     const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
     
-    console.log(`Connection ${startPos}->${endPos}: start(${startCenterX},${startCenterY}) end(${endCenterX},${endCenterY}) length:${length} angle:${angle}`);
-    
+    // Position the connection line to start from the center of start square
+    // and extend to the center of end square
     return {
       left: startCenterX,
       top: startCenterY,
@@ -640,12 +646,6 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                   src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
                   alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
                   className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'fill',
-                    display: 'block'
-                  }}
                 />
               </div>
             ))}
