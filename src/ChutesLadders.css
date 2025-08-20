@@ -506,6 +506,7 @@ body {
 }
 
 .player-piece {
+  min-width: 42px;
   width: var(--player-size);
   height: var(--player-size);
   border-radius: 50%;
