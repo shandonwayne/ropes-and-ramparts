@@ -132,41 +132,43 @@ const ChutesLaddersGame: React.FC = () => {
   const calculateRopePosition = (startPos: number, endPos: number) => {
     if (!boardRef.current) return null;
     
+    console.log('Looking for squares with positions:', startPos, endPos);
     const boardRect = boardRef.current.getBoundingClientRect();
     const squares = boardRef.current.querySelectorAll('.game-square');
+    console.log('Found squares:', squares.length);
     
-    let startSquare: HTMLElement | null = null;
-    let endSquare: HTMLElement | null = null;
+    const startSquare = Array.from(squares).find(square => 
+      parseInt((square as HTMLElement).dataset.position || '0') === startPos
+    ) as HTMLElement;
     
-    // Find squares by their data-position attribute
-    squares.forEach(square => {
-      const position = parseInt((square as HTMLElement).dataset.position || '0');
-      if (position === startPos) startSquare = square as HTMLElement;
-      if (position === endPos) endSquare = square as HTMLElement;
-    });
+    const endSquare = Array.from(squares).find(square => 
+      parseInt((square as HTMLElement).dataset.position || '0') === endPos
+    ) as HTMLElement;
     
-    if (!startSquare || !endSquare) {
-      console.warn(`Could not find squares for positions ${startPos} -> ${endPos}`);
-      return null;
-    }
+    console.log('Start square:', startSquare, 'End square:', endSquare);
+    
+    if (!startSquare || !endSquare) return null;
     
     const startRect = startSquare.getBoundingClientRect();
     const endRect = endSquare.getBoundingClientRect();
     
-    // Calculate exact center points relative to board
-    const startX = startRect.left + (startRect.width / 2) - boardRect.left;
-    const startY = startRect.top + (startRect.height / 2) - boardRect.top;
-    const endX = endRect.left + (endRect.width / 2) - boardRect.left;
-    const endY = endRect.top + (endRect.height / 2) - boardRect.top;
+    // Calculate center positions of squares relative to the board container
+    const startCenterX = startRect.left + startRect.width / 2 - boardRect.left;
+    const startCenterY = startRect.top + startRect.height / 2 - boardRect.top;
+    const endCenterX = endRect.left + endRect.width / 2 - boardRect.left;
+    const endCenterY = endRect.top + endRect.height / 2 - boardRect.top;
     
-    const deltaX = endX - startX;
-    const deltaY = endY - startY;
+    // Calculate the connection line
+    const deltaX = endCenterX - startCenterX;
+    const deltaY = endCenterY - startCenterY;
     const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
     
+    // Position the connection line to start from the center of start square
+    // and extend to the center of end square
     return {
-      left: startX,
-      top: startY,
+      left: startCenterX,
+      top: startCenterY,
       width: length,
       angle
     };
@@ -562,24 +564,24 @@ const ChutesLaddersGame: React.FC = () => {
     return gameRow * GAME_CONFIG.gridWidth + gameCol + 1;
   };
 
-  // Get character image based on player state and activity
-  const getCharacterImage = (playerId: number, isActive: boolean) => {
-    const playerState = playerId === 1 ? player1State : player2State;
-    
-    if (playerId === 1) {
-      // Sir Rowan
-      if (playerState === 'failure') {
-        return "/Rowan-Failure.svg";
-      }
-      return "/SirRowan.svg"; // Default for both active and inactive
-    } else {
-      // Lady Isolde
-      if (playerState === 'failure') {
-        return "/Isolde-Failure.svg";
-      }
-      return isActive ? "/Isolde-Final-Active.svg" : "/Isolde.svg";
+// Get character image based on player state and activity
+const getCharacterImage = (playerId: number, isActive: boolean) => {
+  const playerState = playerId === 1 ? player1State : player2State;
+  
+  if (playerId === 1) {
+    // Sir Rowan
+    if (playerState === 'failure') {
+      return "/Rowan-Failure.svg";
     }
-  };
+    return "/SirRowan.svg"; // Default for both active and inactive
+  } else {
+    // Lady Isolde
+    if (playerState === 'failure') {
+      return "/Isolde-Failure.svg";
+    }
+    return isActive ? "/Isolde-Final-Active.svg" : "/Isolde.svg";
+  }
+};
 
   return (
     <div className="game-container">
@@ -640,21 +642,11 @@ const ChutesLaddersGame: React.FC = () => {
                 className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
                 style={rope.style}
               >
-                {GAME_CONFIG.chutes[rope.start] ? (
-                  <img 
-                    src="/Rampart.svg" 
-                    alt="rampart" 
-                    className="rampart-svg"
-                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
-                  />
-                ) : (
-                  <img 
-                    src="/rope.svg" 
-                    alt="rope" 
-                    className="rope-svg"
-                    style={{ width: '100%', height: '100%', objectFit: 'fill' }}
-                  />
-                )}
+                <img 
+                  src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
+                  alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
+                  className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
+                />
               </div>
             ))}
           </div>
