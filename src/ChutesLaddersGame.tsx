@@ -68,6 +68,36 @@ const ChutesLaddersGame: React.FC = () => {
       console.log('Calculating ropes...');
       const newRopePositions: Array<{start: number, end: number, style: React.CSSProperties}> = [];
       
+      // Calculate chute connections (ramparts)
+      Object.entries(GAME_CONFIG.chutes).forEach(([start, end]) => {
+        const startPos = parseInt(start);
+        const endPos = end;
+        console.log(`Calculating rampart from ${startPos} to ${endPos}`);
+        const ropePos = calculateRopePosition(startPos, endPos);
+        
+        if (ropePos) {
+          console.log('Rampart position calculated:', ropePos);
+          newRopePositions.push({
+            start: startPos,
+            end: endPos,
+            style: {
+              position: 'absolute',
+              left: `${ropePos.left}px`,
+              top: `${ropePos.top}px`,
+              width: `${ropePos.width}px`,
+              height: '8px',
+              transform: `rotate(${ropePos.angle}deg)`,
+              transformOrigin: '0 50%',
+              zIndex: 100,
+              pointerEvents: 'none'
+            }
+          });
+        } else {
+          console.log('No rampart position calculated for', startPos, endPos);
+        }
+      });
+      
+      // Calculate ladder connections (ropes)
       Object.entries(GAME_CONFIG.ladders).forEach(([start, end]) => {
         const startPos = parseInt(start);
         const endPos = end;
@@ -88,7 +118,8 @@ const ChutesLaddersGame: React.FC = () => {
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               zIndex: 100,
-              pointerEvents: 'none'
+              pointerEvents: 'none',
+              connectionType: 'ladder'
             }
           });
         } else {
@@ -568,10 +599,15 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
             {ropePositions.map((rope) => (
               <div
                 key={`rope-${rope.start}-${rope.end}`}
-                className="rope-connection"
+                className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
                 style={rope.style}
               >
-                <img src="/rope.svg" alt="rope" className="rope-svg" style={{ width: '100%', height: '100%' }} />
+                <img 
+                  src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
+                  alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
+                  className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
+                  style={{ width: '100%', height: '100%' }} 
+                />
               </div>
             ))}
           </div>
