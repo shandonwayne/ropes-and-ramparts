@@ -641,13 +641,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 key={`rope-${rope.start}-${rope.end}`}
                 className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
                 style={rope.style}
-              >
-                <img 
-                  src={GAME_CONFIG.chutes[rope.start] ? "/Rampart.svg" : "/rope.svg"} 
-                  alt={GAME_CONFIG.chutes[rope.start] ? "rampart" : "rope"} 
-                  className={GAME_CONFIG.chutes[rope.start] ? "rampart-svg" : "rope-svg"} 
-                />
-              </div>
+              />
             ))}
           </div>
           
