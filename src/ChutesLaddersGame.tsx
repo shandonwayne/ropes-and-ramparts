@@ -55,8 +55,8 @@ const ChutesLaddersGame: React.FC = () => {
   const [isSettling, setIsSettling] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
   const [ropePositions, setRopePositions] = useState<Array<{start: number, end: number, style: React.CSSProperties}>>([]);
-  const [isoldeInFailureState, setIsoldeInFailureState] = useState(false);
-  const [rowanInFailureState, setRowanInFailureState] = useState(false);
+  const [player1State, setPlayer1State] = useState<'default' | 'failure'>('default');
+  const [player2State, setPlayer2State] = useState<'default' | 'failure'>('default');
   
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -249,14 +249,13 @@ const ChutesLaddersGame: React.FC = () => {
   const rollDice = async () => {
     if (isRolling || isSettling || isMoving || gameOver) return;
     
-    // Reset Isolde's failure state when she rolls the dice
-    if (currentPlayerIndex === 1 && isoldeInFailureState) {
-      setIsoldeInFailureState(false);
+    // Reset player's failure state when they roll the dice
+    if (currentPlayerIndex === 0 && player1State === 'failure') {
+      setPlayer1State('default');
     }
     
-    // Reset Rowan's failure state when he rolls the dice
-    if (currentPlayerIndex === 0 && rowanInFailureState) {
-      setRowanInFailureState(false);
+    if (currentPlayerIndex === 1 && player2State === 'failure') {
+      setPlayer2State('default');
     }
     
     // Start rolling animation
@@ -339,14 +338,13 @@ const ChutesLaddersGame: React.FC = () => {
     if (GAME_CONFIG.chutes[newPosition]) {
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      // If it's Isolde (player 2) hitting a chute, set failure state
-      if (currentPlayer.id === 2) {
-        setIsoldeInFailureState(true);
+      // Set failure state for player hitting a chute
+      if (currentPlayer.id === 1) {
+        setPlayer1State('failure');
       }
       
-      // If it's Rowan (player 1) hitting a chute, set failure state
-      if (currentPlayer.id === 1) {
-        setRowanInFailureState(true);
+      if (currentPlayer.id === 2) {
+        setPlayer2State('failure');
       }
       
       newPosition = GAME_CONFIG.chutes[newPosition];
@@ -391,8 +389,8 @@ const ChutesLaddersGame: React.FC = () => {
     setInactiveDiceValue(1);
     setPlayer1LastRoll(1);
     setPlayer2LastRoll(1);
-    setIsoldeInFailureState(false);
-    setRowanInFailureState(false);
+    setPlayer1State('default');
+    setPlayer2State('default');
     setGameOver(false);
     setWinner(null);
     setIsRolling(false);
@@ -495,6 +493,25 @@ const ChutesLaddersGame: React.FC = () => {
     return gameRow * GAME_CONFIG.gridWidth + gameCol + 1;
   };
 
+// Get character image based on player state and activity
+const getCharacterImage = (playerId: number, isActive: boolean) => {
+  const playerState = playerId === 1 ? player1State : player2State;
+  
+  if (playerId === 1) {
+    // Sir Rowan
+    if (playerState === 'failure') {
+      return "/Rowan-Failure.svg";
+    }
+    return "/SirRowan.svg"; // Default for both active and inactive
+  } else {
+    // Lady Isolde
+    if (playerState === 'failure') {
+      return "/Isolde-Failure.svg";
+    }
+    return isActive ? "/Isolde-Final-Active.svg" : "/Isolde.svg";
+  }
+};
+
   return (
     <div className="game-container">
       {gameOver ? (
@@ -514,26 +531,14 @@ const ChutesLaddersGame: React.FC = () => {
               <img src="/SirRowan-Name.svg" alt="Sir Rowan" style={{ width: '100%', height: 'auto' }} />
             </div>
             <div className="character-illustration">
-              {/* Inactive Rowan */}
               <img 
-                src={rowanInFailureState ? "/Rowan-Failure.svg" : "/SirRowan.svg"}
+                src={getCharacterImage(1, currentPlayerIndex === 0)}
                 alt="Sir Rowan" 
+                className={`character-image player-1 ${player1State} ${currentPlayerIndex === 0 ? 'active' : 'inactive'}`}
                 style={{ 
                   width: '100%', 
                   height: '100%', 
-                  objectFit: 'contain',
-                  display: currentPlayerIndex === 0 ? 'none' : 'block'
-                }}
-              />
-              {/* Active Rowan - placeholder for now */}
-              <img 
-                src={rowanInFailureState ? "/Rowan-Failure.svg" : "/SirRowan.svg"}
-                alt="Sir Rowan Active" 
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'contain',
-                  display: currentPlayerIndex === 0 ? 'block' : 'none'
+                  objectFit: 'contain'
                 }}
               />
             </div>
@@ -577,26 +582,14 @@ const ChutesLaddersGame: React.FC = () => {
               <img src="/LadyIsolde-Name.svg" alt="Lady Isolde" style={{ width: '100%', height: 'auto' }} />
             </div>
             <div className="character-illustration">
-              {/* Inactive Isolde */}
               <img 
-                src={isoldeInFailureState ? "/Isolde-Failure.svg" : "/Isolde.svg"}
+                src={getCharacterImage(2, currentPlayerIndex === 1)}
                 alt="Lady Isolde" 
+                className={`character-image player-2 ${player2State} ${currentPlayerIndex === 1 ? 'active' : 'inactive'}`}
                 style={{ 
                   width: '100%', 
                   height: '100%', 
-                  objectFit: 'contain',
-                  display: currentPlayerIndex === 1 ? 'none' : 'block'
-                }}
-              />
-              {/* Active Isolde */}
-              <img 
-                src={isoldeInFailureState ? "/Isolde-Failure.svg" : "/Isolde-Final-Active.svg"}
-                alt="Lady Isolde Active" 
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'contain',
-                  display: currentPlayerIndex === 1 ? 'block' : 'none'
+                  objectFit: 'contain'
                 }}
               />
             </div>
