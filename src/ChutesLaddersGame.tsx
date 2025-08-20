@@ -248,6 +248,11 @@ const ChutesLaddersGame: React.FC = () => {
   const rollDice = async () => {
     if (isRolling || isSettling || isMoving || gameOver) return;
     
+    // Reset Isolde's failure state when she rolls the dice
+    if (currentPlayerIndex === 1 && isoldeInFailureState) {
+      setIsoldeInFailureState(false);
+    }
+    
     // Start rolling animation
     setIsRolling(true);
     setIsSettling(false);
@@ -331,8 +336,6 @@ const ChutesLaddersGame: React.FC = () => {
       // If it's Isolde (player 2) hitting a chute, set failure state
       if (currentPlayer.id === 2) {
         setIsoldeInFailureState(true);
-        // Reset failure state after 3 seconds
-        setTimeout(() => setIsoldeInFailureState(false), 3000);
       }
       
       newPosition = GAME_CONFIG.chutes[newPosition];
