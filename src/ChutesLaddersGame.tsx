@@ -510,7 +510,7 @@ const ChutesLaddersGame: React.FC = () => {
                     height: '100%',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
                     zIndex: 100 // Ensure tokens are above connections
                   }}
                 >
