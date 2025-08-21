@@ -601,7 +601,7 @@ body {
 .victory-modal {
   position: relative;
   width: 90%;
-  max-width: 600px;
+  max-width: 700px;
   border-radius: 20px;
   padding: 0;
   overflow: hidden;
