@@ -683,7 +683,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
               <div className="victory-modal rowan-modal">
                 <div className="victory-content">
                   <div className="victory-text">
-                    <img src="/Glory is Rowan's.svg" alt="Glory is Rowan's" className="glory-title"/>
+                    <img src="/Glory is Rowans.svg" alt="Glory is Rowans" className="glory-title"/>
                     <p className="victory-subtitle">THE KNIGHT PREVAILS.</p>
                     <button className="play-again-button" onClick={resetGame}>
                       PLAY AGAIN
