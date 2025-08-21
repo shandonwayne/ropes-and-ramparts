@@ -685,6 +685,13 @@ body {
   opacity: 0.9; 
 }
 
+/* Isolde-specific subtitle styling */
+.isolde-modal .victory-subtitle {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400; /* Anton is naturally bold */
+  letter-spacing: 0.1em;
+}
+
 .play-again-button {
   background: var(--Black);
   color: white;
