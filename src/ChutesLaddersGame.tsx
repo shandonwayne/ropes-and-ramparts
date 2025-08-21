@@ -641,6 +641,28 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
 
   return (
     <div className="game-container">
+      {/* Temporary Testing Buttons */}
+      <div className="testing-buttons">
+        <button 
+          className="test-button isolde-test"
+          onClick={() => {
+            setGameOver(true);
+            setWinner('Lady Isolde');
+          }}
+        >
+          Test Isolde Win
+        </button>
+        <button 
+          className="test-button rowan-test"
+          onClick={() => {
+            setGameOver(true);
+            setWinner('Player 1');
+          }}
+        >
+          Test Rowan Win
+        </button>
+      </div>
+      
       {gameOver ? (
         <div className="game-main">
           <div className={`game-over ${winner === 'Lady Isolde' ? 'isolde-victory' : 'rowan-victory'}`}>
