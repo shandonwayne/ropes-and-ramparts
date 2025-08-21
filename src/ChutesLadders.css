@@ -639,6 +639,10 @@ body {
   min-height: 44.4vh;
 }
 
+.glory-title {
+   min-width: 300px
+  }
+
 .victory-character {
   /* flex: 1;
   display: flex;
