@@ -643,11 +643,46 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
     <div className="game-container">
       {gameOver ? (
         <div className="game-main">
-          <div className="game-over">
-            <h2 className="winner-announcement">🎉 {winner} Wins! 🎉</h2>
-            <button className="reset-button" onClick={resetGame}>
-              Play Again
-            </button>
+          <div className={`game-over ${winner === 'Lady Isolde' ? 'isolde-victory' : 'rowan-victory'}`}>
+            {winner === 'Lady Isolde' ? (
+              <div className="victory-modal isolde-modal">
+                <div className="victory-content">
+                  <div className="victory-character">
+                    <img 
+                      src="/Glory-Isolde.svg" 
+                      alt="Victorious Lady Isolde"
+                      className="victory-character-image"
+                    />
+                  </div>
+                  <div className="victory-text">
+                    <h1 className="victory-title">GLORY IS ISOLDE'S.</h1>
+                    <p className="victory-subtitle">THE GOBLIN REIGNS.</p>
+                    <button className="play-again-button" onClick={resetGame}>
+                      PLAY AGAIN
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="victory-modal rowan-modal">
+                <div className="victory-content">
+                  <div className="victory-character">
+                    <img 
+                      src="/SirRowan.svg" 
+                      alt="Victorious Sir Rowan"
+                      className="victory-character-image"
+                    />
+                  </div>
+                  <div className="victory-text">
+                    <h1 className="victory-title">VICTORY IS ROWAN'S.</h1>
+                    <p className="victory-subtitle">THE KNIGHT PREVAILS.</p>
+                    <button className="play-again-button" onClick={resetGame}>
+                      PLAY AGAIN
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ) : (
