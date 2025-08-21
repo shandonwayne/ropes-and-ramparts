@@ -607,6 +607,7 @@ body {
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   animation: victoryAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-height: 40vh;
 }
 
 @keyframes victoryAppear {
@@ -644,6 +645,7 @@ body {
   position: absolute;
   right: 0;
   top: -50px;
+  min-height: 60vh;
 }
 
 .victory-character-image {
