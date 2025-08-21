@@ -650,7 +650,6 @@ body {
 
 .victory-character-image {
   width: 100%;
-  max-width: 250px;
   height: auto;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
 }
