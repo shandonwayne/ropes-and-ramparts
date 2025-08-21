@@ -87,7 +87,7 @@ const ChutesLaddersGame: React.FC = () => {
               transformOrigin: '0 50%',
               zIndex: 100,
               pointerEvents: 'none',
-              background: 'linear-gradient(90deg,rgba(68, 69, 70, 1) 0%, rgba(100, 92, 94, 1) 75%, rgba(68, 69, 70, 1) 100%);', // Chute gradient
+              background: 'linear-gradient(90deg,rgba(68, 69, 70, 1) 0%, rgba(100, 92, 94, 1) 75%, rgba(68, 69, 70, 1) 100%)', // Chute gradient
               borderRadius: '4px', // Rounded corners
               zIndex: 50 // Lower than player tokens
             }
