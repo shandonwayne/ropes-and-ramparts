@@ -646,9 +646,8 @@ body {
   justify-content: center; */
   position: absolute;
   right: 0;
-  /* top: -50px; */
+  top: -50px;
   min-height: 60vh; 
-  bottom: -26vh;
 }
 
 .victory-character-image {
