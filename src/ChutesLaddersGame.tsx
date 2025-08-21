@@ -675,10 +675,10 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                       alt="Victorious Lady Isolde"
                       className="victory-character-image"
                     />
+                    <p className="victory-subtitle">THE GOBLIN REIGNS.</p>
                   </div>
                   <div className="victory-text">
                     <h1 className="victory-title">GLORY IS ISOLDE'S.</h1>
-                    <p className="victory-subtitle">THE GOBLIN REIGNS.</p>
                     <button className="play-again-button" onClick={resetGame}>
                       PLAY AGAIN
                     </button>
