@@ -673,7 +673,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                       <img 
                       src="/Glory-Isolde.svg" 
                       alt="Victorious Lady Isolde"
-                      className="victory-character-image"
+                      className="glory-title"
                     />
                      <p className="victory-subtitle">THE GOBLIN REIGNS.</p>
                     <button className="play-again-button" onClick={resetGame}>
