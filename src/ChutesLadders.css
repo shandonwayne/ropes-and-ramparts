@@ -401,7 +401,7 @@ body {
   aspect-ratio: 1;
   max-width: 900px;
   width: 100%;
-  border: pink #1B1B1B 4px;
+  border: #1B1B1B solid 4px;
 }
 
 /* Game Squares - Checkerboard Pattern */
