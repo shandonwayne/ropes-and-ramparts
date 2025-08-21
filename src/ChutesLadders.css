@@ -415,7 +415,7 @@ body {
   transition: all var(--transition-fast);
   min-height: var(--square-size);
   font-weight: var(--font-weight-bold);
-  border-radius: 1px;
+  border-radius: 5px;
 }
 
 /* Checkerboard pattern - Iron and Black with Pebble numbers */
