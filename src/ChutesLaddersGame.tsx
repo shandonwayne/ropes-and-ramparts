@@ -89,7 +89,8 @@ const ChutesLaddersGame: React.FC = () => {
               pointerEvents: 'none',
               background: 'linear-gradient(90deg,rgba(68, 69, 70, 1) 0%, rgba(100, 92, 94, 1) 75%, rgba(68, 69, 70, 1) 100%)', // Chute gradient
               borderRadius: '4px', // Rounded corners
-              zIndex: 50 // Lower than player tokens
+              zIndex: 50, // Lower than player tokens
+              backgroundImage: 'repeating-linear-gradient(90deg, transparent 0px, transparent 3px, rgba(0,0,0,0.3) 3px, rgba(0,0,0,0.3) 4px)'
             }
           });
         }
@@ -117,7 +118,8 @@ const ChutesLaddersGame: React.FC = () => {
               pointerEvents: 'none',
               background: 'linear-gradient(90deg, #F57B35, #FFBC2E)', // Tangerine to Sunflower gradient
               borderRadius: '4px', // Rounded corners
-              zIndex: 50 // Lower than player tokens
+              zIndex: 50, // Lower than player tokens
+              backgroundImage: 'repeating-linear-gradient(90deg, transparent 0px, transparent 3px, rgba(0,0,0,0.3) 3px, rgba(0,0,0,0.3) 4px)'
             }
           });
         }
