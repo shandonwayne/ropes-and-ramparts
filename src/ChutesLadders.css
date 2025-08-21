@@ -645,7 +645,7 @@ body {
   justify-content: center; */
   position: absolute;
   right: 0;
-  top: -50px;
+  /* top: -50px; */
   min-height: 60vh; 
   bottom: -26vh;
 }
@@ -678,7 +678,7 @@ body {
   margin: 0 0 var(--space-xl) 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0.9;
+  opacity: 0.9; 
 }
 
 .play-again-button {
