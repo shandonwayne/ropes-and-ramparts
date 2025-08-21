@@ -669,19 +669,23 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
             {winner === 'Lady Isolde' ? (
               <div className="victory-modal isolde-modal">
                 <div className="victory-content">
-                  <div className="victory-character">
-                    <img 
+                <div className="victory-text">
+                      <img 
                       src="/Glory-Isolde.svg" 
                       alt="Victorious Lady Isolde"
                       className="victory-character-image"
                     />
-                    <p className="victory-subtitle">THE GOBLIN REIGNS.</p>
-                  </div>
-                  <div className="victory-text">
-                    <h1 className="victory-title">GLORY IS ISOLDE'S.</h1>
+                     <p className="victory-subtitle">THE GOBLIN REIGNS.</p>
                     <button className="play-again-button" onClick={resetGame}>
                       PLAY AGAIN
                     </button>
+                  </div>
+                  <div className="victory-character">
+                    <img 
+                      src="/Isolde-Cropped.svg" 
+                      alt="Victorious Lady Isolde"
+                      className="victory-character-image"
+                    />
                   </div>
                 </div>
               </div>
