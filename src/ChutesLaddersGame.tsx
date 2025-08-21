@@ -117,7 +117,7 @@ const ChutesLaddersGame: React.FC = () => {
               pointerEvents: 'none',
               background: 'linear-gradient(90deg, #F57B35, #FFBC2E)', // Tangerine to Sunflower gradient
               borderRadius: '4px', // Rounded corners
-              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #000000 2px, #000000 3px)', // Striped black stroke
+              border: '1px solid #000000', // Black stroke for ladders
               zIndex: 50 // Lower than player tokens
             }
           });
