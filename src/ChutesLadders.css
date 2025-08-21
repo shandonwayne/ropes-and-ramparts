@@ -631,27 +631,61 @@ body {
 }
 
 .victory-content {
-  /* display: flex; */
-  /* align-items: center; */ 
+  display: flex;
+  align-items: center;
   position: relative;
   padding: var(--space-2xl);
   gap: var(--space-xl);
   min-height: 44.4vh;
 }
 
-.glory-title {
-   min-width: 300px
-  }
+/* Isolde-specific layout (text left, character right) */
+.isolde-modal .victory-content {
+  flex-direction: row;
+}
 
-.victory-character {
-  /* flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center; */
+.isolde-modal .victory-text {
+  flex: 1;
+  text-align: left;
+  order: 1;
+}
+
+.isolde-modal .victory-character {
   position: absolute;
   right: 0;
   top: -50px;
-  min-height: 60vh; 
+  min-height: 60vh;
+  order: 2;
+}
+
+/* Rowan-specific layout (character left, text right) */
+.rowan-modal .victory-content {
+  flex-direction: row;
+}
+
+.rowan-modal .victory-text {
+  flex: 1;
+  text-align: right;
+  order: 2;
+}
+
+.rowan-modal .victory-character {
+  position: absolute;
+  left: 0;
+  top: -50px;
+  min-height: 60vh;
+  order: 1;
+}
+
+.glory-title {
+  min-width: 300px;
+}
+
+.victory-character {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .victory-character-image {
@@ -661,8 +695,6 @@ body {
 }
 
 .victory-text {
-  flex: 1;
-  text-align: left;
   color: var(--Black);
 }
 
@@ -688,6 +720,13 @@ body {
 
 /* Isolde-specific subtitle styling */
 .isolde-modal .victory-subtitle {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400; /* Anton is naturally bold */
+  letter-spacing: 0.1em;
+}
+
+/* Rowan-specific subtitle styling */
+.rowan-modal .victory-subtitle {
   font-family: 'Anton', sans-serif;
   font-weight: 400; /* Anton is naturally bold */
   letter-spacing: 0.1em;
@@ -757,7 +796,23 @@ body {
   }
 
   .glory-title {
-   min-width: 300px
+    min-width: 300px;
+  }
+  
+  .isolde-modal .victory-text,
+  .rowan-modal .victory-text {
+    text-align: center;
+    order: 2;
+  }
+  
+  .isolde-modal .victory-character,
+  .rowan-modal .victory-character {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    order: 1;
+    min-height: auto;
   }
   
   .victory-text {
