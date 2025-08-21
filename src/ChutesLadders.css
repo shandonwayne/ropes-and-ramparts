@@ -743,6 +743,10 @@ body {
     text-align: center;
     padding: var(--space-xl);
   }
+
+  .glory-title {
+   min-width: 300px
+  }
   
   .victory-text {
     text-align: center;
