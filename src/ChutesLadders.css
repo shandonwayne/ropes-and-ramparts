@@ -548,10 +548,111 @@ body {
 .game-over {
   text-align: center;
   grid-column: 1 / -1;
-  background: var(--Pink);
-  padding: var(--space-xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-lg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.victory-modal {
+  width: 90%;
+  max-width: 600px;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: victoryAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes victoryAppear {
+  from {
+    transform: scale(0.8) translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.isolde-modal {
+  background: linear-gradient(135deg, var(--Pink) 0%, #D67BA5 100%);
+}
+
+.rowan-modal {
+  background: linear-gradient(135deg, var(--Tangerine) 0%, #E6A855 100%);
+}
+
+.victory-content {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2xl);
+  gap: var(--space-xl);
+}
+
+.victory-character {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.victory-character-image {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+}
+
+.victory-text {
+  flex: 1;
+  text-align: left;
+  color: var(--Black);
+}
+
+.victory-title {
+  font-family: var(--title-font-family);
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-black);
+  margin: 0 0 var(--space-sm) 0;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.victory-subtitle {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--space-xl) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.play-again-button {
+  background: var(--Black);
+  color: white;
+  border: none;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.play-again-button:hover {
+  background: var(--Iron);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .winner-announcement {
@@ -586,6 +687,42 @@ body {
   background: var(--Iron);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+/* Responsive victory modal */
+@media (max-width: 768px) {
+  .victory-content {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-xl);
+  }
+  
+  .victory-text {
+    text-align: center;
+  }
+  
+  .victory-title {
+    font-size: 2rem;
+  }
+  
+  .victory-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .victory-modal {
+    width: 95%;
+    margin: var(--space-md);
+  }
+  
+  .victory-content {
+    padding: var(--space-lg);
+  }
+  
+  .victory-title {
+    font-size: 1.75rem;
+  }
 }
 
 /* Player Status - Hidden in new layout */
