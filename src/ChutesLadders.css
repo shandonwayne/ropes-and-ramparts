@@ -599,7 +599,7 @@ body {
 }
 
 .victory-modal {
-  display: relative;
+  position: relative;
   width: 90%;
   max-width: 600px;
   border-radius: 20px;
