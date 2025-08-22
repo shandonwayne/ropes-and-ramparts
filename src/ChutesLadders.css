@@ -744,7 +744,7 @@ body {
   cursor: pointer;
   transition: all var(--transition-normal);
   text-transform: uppercase;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.08em;
   color:white;
   font-family: 'Anton', sans-serif;
 }
