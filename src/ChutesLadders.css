@@ -906,6 +906,8 @@ body {
     padding: var(--space-md) var(--space-lg); /* Reduce vertical padding, maintain horizontal */
     min-height: 120px; /* Set minimum height for consistent panel size */
     gap: var(--space-md); /* Add gap between flex items */
+    flex-wrap: wrap; /* Allow wrapping on very narrow screens */
+    overflow: hidden; /* Ensure content stays within container */
   }
   
   /* Player title section - compact for mobile */
@@ -913,6 +915,7 @@ body {
     flex: 0 0 auto; /* Don't grow or shrink, use natural size */
     max-width: 120px; /* Limit width to prevent title from taking too much space */
     font-size: 1.2rem; /* Slightly smaller font for mobile */
+    min-width: 80px; /* Ensure minimum space for title */
   }
   
   .player-title img {
@@ -945,9 +948,11 @@ body {
   .player-dice {
     flex: 0 0 auto; /* Don't grow or shrink */
     margin-top: 0; /* Remove top margin */
-    margin-left: var(--space-sm); /* Add left margin for spacing */
+    margin-left: 0; /* Remove left margin to prevent overflow */
     width: 50px; /* Slightly smaller dice for mobile */
     height: 50px;
+    flex-shrink: 0; /* Prevent dice from shrinking */
+    position: relative; /* Ensure proper positioning */
   }
   
   /* Adjust dice faces for smaller size */
@@ -1021,27 +1026,36 @@ body {
 @media (max-width: 480px) {
   /* Extra small mobile devices - further optimize horizontal layout */
   .player-panel {
-    min-height: 100px; /* Reduce minimum height for very small screens */
-    padding: var(--space-sm) var(--space-md); /* Further reduce padding */
+    min-height: auto; /* Allow natural height */
+    padding: var(--space-sm); /* Uniform padding */
+    flex-direction: column; /* Stack vertically on very narrow screens */
+    align-items: center; /* Center all items */
+    justify-content: center; /* Center content */
+    gap: var(--space-sm); /* Smaller gap for stacked layout */
+    text-align: center; /* Center text */
   }
   
   .player-title {
-    max-width: 100px; /* Further reduce title width */
+    max-width: none; /* Remove width restriction */
+    width: 100%; /* Full width for stacked layout */
     font-size: 1rem; /* Smaller font for very small screens */
+    order: 1; /* Title first */
   }
   
   .player-title img {
     max-height: 35px; /* Smaller title image */
   }
   
-  .character-illustration {
-    min-height: 70px; /* Smaller character area */
-    max-height: 80px;
+  .player-info-display {
+    order: 2; /* Info second */
+    min-width: auto; /* Remove minimum width */
   }
   
   .player-dice {
     width: 45px; /* Even smaller dice for very small screens */
     height: 45px;
+    order: 3; /* Dice last */
+    margin-left: 0; /* No margin needed in stacked layout */
   }
   
   .dice-face {
@@ -1078,6 +1092,15 @@ body {
   
   .dice-face.bottom {
     transform: rotateX(-90deg) translateZ(22.5px);
+  }
+  
+  /* Adjust active dice positioning for stacked layout */
+  .player-panel.active .player-dice {
+    transform: translateY(-10px); /* Smaller lift for stacked layout */
+  }
+  
+  .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
+    transform: translateY(-12px) scale(1.05) rotateX(-5deg) rotateY(5deg);
   }
   
   .game-title {
