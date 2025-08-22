@@ -636,7 +636,6 @@ body {
   position: relative;
   padding: var(--space-2xl);
   gap: var(--space-xl);
-  min-height: 44.4vh;
 }
 
 /* Isolde-specific layout (text left, character right) */
@@ -673,7 +672,6 @@ body {
 .rowan-modal .victory-character {
   position: absolute;
   left: 0;
-  /* top: -50px; */
   min-height: 60vh;
   order: 1;
   bottom: -5.9vh; 
