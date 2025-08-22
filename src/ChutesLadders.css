@@ -740,7 +740,6 @@ body {
   padding: var(--space-md) var(--space-xl);
   border-radius: 3px;
   font-size: 1rem;
-  font-weight: var(--font-weight-bold);
   cursor: pointer;
   transition: all var(--transition-normal);
   text-transform: uppercase;
