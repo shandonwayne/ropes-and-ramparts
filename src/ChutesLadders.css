@@ -715,8 +715,7 @@ body {
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--space-xl) 0;
   text-transform: uppercase;
-  opacity: 0.9; 
-  letter-spacing: 0.05em;
+  letter-spacing: 0.075em;
   margin-top: .5rem;
 }
 
