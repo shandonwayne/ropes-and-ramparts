@@ -736,7 +736,7 @@ body {
 .play-again-button {
   background: var(--Black);
   border: none;
-  padding: var(--space-md) var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
