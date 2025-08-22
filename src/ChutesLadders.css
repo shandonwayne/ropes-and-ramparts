@@ -716,6 +716,7 @@ body {
   margin: 0 0 var(--space-xl) 0;
   text-transform: uppercase;
   margin-top: .5rem;
+  letter-spacing:.025rem;
 }
 
 /* Isolde-specific subtitle styling */
