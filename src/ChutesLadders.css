@@ -711,7 +711,7 @@ body {
 }
 
 .victory-subtitle {
-  font-size: 2rem;
+  font-size: 1.85rem;
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--space-xl) 0;
   text-transform: uppercase;
