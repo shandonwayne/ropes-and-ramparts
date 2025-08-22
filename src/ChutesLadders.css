@@ -711,11 +711,11 @@ body {
 }
 
 .victory-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--space-xl) 0;
   text-transform: uppercase;
-  letter-spacing: 0.075em;
+  letter-spacing: 0.05em;
   margin-top: .5rem;
 }
 
