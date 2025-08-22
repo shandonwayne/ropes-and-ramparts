@@ -878,7 +878,7 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 1800px) {
+@media (max-width: 1024px) {
   .game-main {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
@@ -897,7 +897,7 @@ body {
   }
 }
 
-@media (max-width: 1800px) {
+@media (max-width: 768px) {
   /* Mobile-specific horizontal layout for character panels */
   .player-panel {
     flex-direction: row; /* Force horizontal layout on mobile */
