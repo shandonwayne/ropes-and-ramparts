@@ -648,11 +648,10 @@ body {
 }
 
 .isolde-modal .victory-character {
-  position: absolute;
-  right: 0;
-  top: -50px;
-  min-height: 60vh;
-  order: 2;
+    position: absolute;
+    right: 0;
+    order: 2;
+    bottom: 0;
 }
 
 /* Rowan-specific layout (character left, text right) */
@@ -667,11 +666,10 @@ body {
 }
 
 .rowan-modal .victory-character {
-  position: absolute;
-  left: 0;
-  min-height: 60vh;
-  order: 1;
-  bottom: -5.9vh; 
+    position: absolute;
+    right: 0;
+    order: 2;
+    bottom: 0;
 }
 
 .glory-title {
