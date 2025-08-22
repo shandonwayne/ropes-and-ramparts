@@ -637,6 +637,7 @@ body {
   padding: var(--space-2xl);
   gap: var(--space-xl);
   height: 90vh;
+  max-height:800px;
 }
 
 /* Isolde-specific layout (text left, character right) */
