@@ -725,6 +725,7 @@ body {
   font-family: 'Anton', sans-serif;
   font-weight: 400; /* Anton is naturally bold */
   letter-spacing: 0.1em;
+  color: #621B39;
 }
 
 /* Rowan-specific subtitle styling */
@@ -732,6 +733,7 @@ body {
   font-family: 'Anton', sans-serif;
   font-weight: 400; /* Anton is naturally bold */
   letter-spacing: 0.1em;
+  color: #1B1B1B;
 }
 
 .play-again-button {
