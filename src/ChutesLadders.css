@@ -1143,6 +1143,7 @@ body {
     width: 100%; /* Full width for stacked layout */
     font-size: 1rem; /* Smaller font for very small screens */
     order: 1; /* Title first */
+    margin-bottom: 3%;
   }
   
   .player-title img {
