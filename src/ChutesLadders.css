@@ -657,12 +657,11 @@ body {
 /* Rowan-specific layout (character left, text right) */
 .rowan-modal .victory-content {
   flex-direction: row;
-  padding-left: 50%;
 }
 
 .rowan-modal .victory-text {
   flex: 1;
-  text-align: right;
+  text-align: left;
   order: 2;
 }
 
