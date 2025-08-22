@@ -746,6 +746,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color:white;
+  font-family: 'Anton', sans-serif;
 }
 
 .rowan-modal .play-again-button{
