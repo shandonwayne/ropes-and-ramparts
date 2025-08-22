@@ -623,7 +623,7 @@ body {
 }
 
 .rowan-modal {
-  background: linear-gradient(135deg, var(--Tangerine) 0%, #E6A855 100%);
+  background: linear-gradient(135deg, #E6A855 0%, #E6A855 100%);
 }
 
 .victory-content {
