@@ -1159,6 +1159,7 @@ body {
     height: 45px;
     order: 3; /* Dice last */
     margin-left: 0; /* No margin needed in stacked layout */
+    margin-bottom: 3%;
   }
   
   .dice-face {
