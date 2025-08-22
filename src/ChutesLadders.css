@@ -745,7 +745,11 @@ body {
   transition: all var(--transition-normal);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: black;
+  color:white;
+}
+
+.rowan-modal .play-again-button{
+  color: #FFBC2E;
 }
 
 .play-again-button:hover {
