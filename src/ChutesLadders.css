@@ -633,6 +633,7 @@ body {
   position: relative;
   padding: var(--space-2xl);
   gap: var(--space-xl);
+  padding-right: 400px;
 }
 
 /* Isolde-specific layout (text left, character right) */
