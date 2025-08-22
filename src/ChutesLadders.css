@@ -878,7 +878,7 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .game-main {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
@@ -887,13 +887,114 @@ body {
   
   .player-panel {
     min-height: auto;
-    flex-direction: row;
+    /* Mobile-specific horizontal layout for character panels */
+    flex-direction: row; /* Force horizontal layout */
+    align-items: center; /* Center items vertically within the horizontal panel */
     justify-content: space-between;
-    padding: var(--space-lg);
+    padding: var(--space-md) var(--space-lg); /* Reduce vertical padding, maintain horizontal */
+    min-height: 120px; /* Set minimum height for consistent panel size */
+    gap: var(--space-md); /* Add gap between flex items */
+    flex-wrap: wrap; /* Allow wrapping on very narrow screens */
+    overflow: hidden; /* Ensure content stays within container */
   }
   
+  /* Player title section - compact for tablet/desktop */
+  .player-title {
+    flex: 0 0 auto; /* Don't grow or shrink, use natural size */
+    max-width: 150px; /* Slightly larger than mobile */
+    font-size: 1.3rem; /* Slightly larger font for larger screens */
+    min-width: 100px; /* Ensure minimum space for title */
+  }
+  
+  .player-title img {
+    width: 100%;
+    height: auto;
+    max-height: 50px; /* Slightly larger than mobile */
+    object-fit: contain;
+  }
+  
+  /* Character illustration - hide on screens up to 1200px */
+  .character-illustration {
+    display: none; /* Hide character illustrations */
+  }
+  
+  /* Player info display - compact layout */
+  .player-info-display {
+    flex: 0 0 auto; /* Don't grow or shrink */
+    text-align: center;
+    min-width: 80px; /* Ensure minimum space for info */
+  }
+  
+  /* Dice positioning for horizontal layout */
   .player-dice {
-    margin-top: 0;
+    flex: 0 0 auto; /* Don't grow or shrink */
+    margin-top: 0; /* Remove top margin */
+    margin-left: 0; /* Remove left margin to prevent overflow */
+    width: 60px; /* Standard size for larger screens */
+    height: 60px;
+    flex-shrink: 0; /* Prevent dice from shrinking */
+    position: relative; /* Ensure proper positioning */
+  }
+  
+  /* Dice faces for standard size */
+  .dice-face {
+    width: 60px;
+    height: 60px;
+    font-size: 14px; /* Standard font for larger screens */
+  }
+  
+  /* Update 3D dice positioning for standard size */
+  .dice-face.front {
+    transform: rotateY(0deg) translateZ(30px);
+  }
+  
+  .dice-face.back {
+    transform: rotateY(180deg) translateZ(30px);
+  }
+  
+  .dice-face.right {
+    transform: rotateY(90deg) translateZ(30px);
+  }
+  
+  .dice-face.left {
+    transform: rotateY(-90deg) translateZ(30px);
+  }
+  
+  .dice-face.top {
+    transform: rotateX(90deg) translateZ(30px);
+  }
+  
+  .dice-face.bottom {
+    transform: rotateX(-90deg) translateZ(30px);
+  }
+  
+  /* Adjust active player dice positioning */
+  .player-panel.active .player-dice {
+    transform: translateY(-20px); /* Moderate lift for larger screens */
+  }
+  
+  .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
+    transform: translateY(-22px) scale(1.05) rotateX(-5deg) rotateY(5deg);
+  }
+  
+  /* Ensure proper spacing in horizontal layout */
+  .game-container {
+    padding: var(--space-lg);
+    gap: var(--space-lg);
+  }
+  
+  .game-title {
+    font-size: 3rem; /* Larger title for bigger screens */
+  }
+  
+  .game-board {
+    max-width: 100%;
+  }
+  
+  .game-legend {
+    flex-direction: row; /* Keep horizontal on larger screens */
+    gap: var(--space-md);
+    text-align: center;
   }
 }
 
