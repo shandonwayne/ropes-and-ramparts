@@ -439,6 +439,7 @@ body {
   border-radius: var(--border-radius);
   aspect-ratio: 1;
   max-width: 900px;
+  max-height: 90vh;
   width: 100%;
   border: #1B1B1B solid 4px;
 }
