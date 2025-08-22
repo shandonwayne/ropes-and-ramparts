@@ -934,6 +934,7 @@ body {
     height: 60px;
     flex-shrink: 0; /* Prevent dice from shrinking */
     position: relative; /* Ensure proper positioning */
+    margin-top: 5%;
   }
   
   /* Dice faces for standard size */
