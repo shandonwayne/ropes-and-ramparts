@@ -752,6 +752,10 @@ body {
   color: #FFBC2E;
 }
 
+.rowan-modal .play-again-button{
+  color: #E08FB5;
+}
+
 .play-again-button:hover {
   background: var(--Iron);
   transform: translateY(-2px);
