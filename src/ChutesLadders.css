@@ -999,7 +999,6 @@ body {
   
   /* Ensure proper spacing in horizontal layout */
   .game-container {
-  .game-container {
     padding: var(--space-md);
     gap: var(--space-md);
   }
