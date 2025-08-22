@@ -738,7 +738,7 @@ body {
   background: var(--Black);
   border: none;
   padding: var(--space-md) var(--space-xl);
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
   transition: all var(--transition-normal);
