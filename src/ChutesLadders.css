@@ -810,10 +810,10 @@ body {
     position: relative;
     left: auto;
     right: auto;
-    top: auto;
+    /* top: auto; */
     order: 1;
     min-height: auto;
-    bottom: -5.9vh;
+    bottom: -5.9vh; 
   }
   
   .victory-text {
