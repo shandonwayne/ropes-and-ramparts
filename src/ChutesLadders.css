@@ -924,13 +924,7 @@ body {
   
   /* Character illustration - optimized for horizontal display */
   .character-illustration {
-    flex: 1; /* Take up remaining space */
-    min-height: 80px; /* Minimum height for character visibility */
-    max-height: 100px; /* Maximum height to fit in horizontal panel */
-    margin: 0 var(--space-sm); /* Add horizontal margins */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: none; /* Hide character illustrations on mobile */
   }
   
   .character-illustration img {

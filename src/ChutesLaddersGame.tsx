@@ -492,7 +492,13 @@ const ChutesLaddersGame: React.FC = () => {
         // Find players on this square
         const playersHere = players.filter(player => {
           const playerVisual = getVisualPosition(player.position);
-          return playerVisual.row === row && playerVisual.col === col && player.position > 0;
+          // On mobile, only show tokens if player has rolled (check if they have a last roll value > 1 or position > 0)
+          const hasRolled = player.position > 0 || 
+            (player.id === 1 && player1LastRoll > 1) || 
+            (player.id === 2 && player2LastRoll > 1);
+          
+          return playerVisual.row === row && playerVisual.col === col && player.position > 0 && 
+            (window.innerWidth > 768 || hasRolled);
         });
         
         squares.push(
@@ -552,7 +558,11 @@ const ChutesLaddersGame: React.FC = () => {
       <>
         {squares}
         {/* Starting position for players at position 0 */}
-        {startingPlayers.length > 0 && (
+        {startingPlayers.length > 0 && (window.innerWidth > 768 || 
+          startingPlayers.some(player => 
+            (player.id === 1 && player1LastRoll > 1) || 
+            (player.id === 2 && player2LastRoll > 1)
+          )) && (
           <div
             className="starting-position"
             style={{
