@@ -736,13 +736,13 @@ body {
 .play-again-button {
   background: var(--Black);
   border: none;
-  padding: var(--space-md) var(--space-xl);
+  padding: var(--space-md) var(--space-md);
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
   transition: all var(--transition-normal);
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.025em;
   color:white;
   font-family: 'Anton', sans-serif;
 }
