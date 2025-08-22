@@ -672,9 +672,10 @@ body {
 .rowan-modal .victory-character {
   position: absolute;
   left: 0;
-  top: -50px;
+  /* top: -50px; */
   min-height: 60vh;
   order: 1;
+  bottom: -5.9vh; 
 }
 
 .glory-title {
