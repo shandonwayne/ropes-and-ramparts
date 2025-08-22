@@ -736,7 +736,6 @@ body {
 
 .play-again-button {
   background: var(--Black);
-  color: white;
   border: none;
   padding: var(--space-md) var(--space-xl);
   border-radius: var(--border-radius);
@@ -746,7 +745,7 @@ body {
   transition: all var(--transition-normal);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: black;
 }
 
 .play-again-button:hover {
