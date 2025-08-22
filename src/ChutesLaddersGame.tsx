@@ -689,9 +689,6 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                       PLAY AGAIN
                     </button>
                   </div>
-                  <div className="victory-character">
-                    <img src="/Rowan-Cropped.svg" alt="Victorious Sir Rowan" className="victory-character-image"/>
-                  </div>
                 </div>
               </div>
             )}
