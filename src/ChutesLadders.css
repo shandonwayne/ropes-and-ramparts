@@ -82,6 +82,7 @@ body {
   cursor: pointer;
   color: white;
   transition: all 0.2s ease;
+  display:none;
 }
 
 .isolde-test {
