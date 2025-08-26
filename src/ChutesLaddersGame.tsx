@@ -522,7 +522,7 @@ const ChutesLaddersGame: React.FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    zIndex: 100 // Ensure tokens are above connections
+                    zIndex: 200 // Ensure tokens are above all game board elements
                   }}
                 >
                   {player.id === 1 ? (
@@ -589,7 +589,7 @@ const ChutesLaddersGame: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  zIndex: 100
+                  zIndex: 200
                 }}
               >
                 {player.id === 1 ? (

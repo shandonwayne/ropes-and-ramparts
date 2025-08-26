@@ -544,7 +544,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 200;
 }
 
 .player-piece {
@@ -562,6 +562,7 @@ body {
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
   animation: pieceAppear var(--transition-normal) ease-out;
+  z-index: 200;
 }
 
 @keyframes pieceAppear {
