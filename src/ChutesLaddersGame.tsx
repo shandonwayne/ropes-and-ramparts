@@ -254,8 +254,10 @@ const ChutesLaddersGame: React.FC = () => {
     // Define all 6 face values (opposite faces add up to 7)
     const faceValues = {
       front: currentValue,      // Current showing face
-      // BUG opposit flases when switching active state
-      back: 7 - currentValue,   // Opposite face
+      // BUG opposite flashes when switching active state
+      // temp janky fix: comment out back styles, make same as front
+      back: currentValue,
+      // back: 7 - currentValue,   // Opposite face
       right: currentValue === 1 ? 2 : (currentValue === 6 ? 5 : (currentValue < 4 ? 6 : 1)),
       left: currentValue === 1 ? 5 : (currentValue === 6 ? 2 : (currentValue < 4 ? 1 : 6)),
       top: currentValue === 1 ? 3 : (currentValue === 6 ? 4 : (currentValue === 2 ? 1 : (currentValue === 5 ? 6 : (currentValue === 3 ? 2 : 5)))),

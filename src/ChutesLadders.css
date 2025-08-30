@@ -953,9 +953,10 @@ body {
     transform: rotateY(0deg) translateZ(30px);
   }
   
-  .dice-face.back {
+  /* TODO fix when I can figure out why back is flashing */
+  /* .dice-face.back {
     transform: rotateY(180deg) translateZ(30px);
-  }
+  } */
   
   .dice-face.right {
     transform: rotateY(90deg) translateZ(30px);
