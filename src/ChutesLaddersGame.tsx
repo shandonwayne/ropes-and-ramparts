@@ -341,52 +341,21 @@ const ChutesLaddersGame: React.FC = () => {
     const finalValue = Math.floor(Math.random() * 6) + 1;
     
     // Animate dice face changes during rolling with smooth transition to final value
-    const rollDuration = 2000; // 2.2 seconds total
     const changeIntervals = [120, 140, 160, 180, 220, 260, 320]; // Removed last interval to prevent jump
-    let currentTime = 0;
-    
     for (let i = 0; i < changeIntervals.length; i++) {
       await new Promise(resolve => setTimeout(resolve, changeIntervals[i]));
-      currentTime += changeIntervals[i];
-      
-      // Gradually bias toward final value, with final value guaranteed in last few iterations
-      let randomValue;
-      if (i >= changeIntervals.length) {
-        // Last two iterations: always show final value
-        randomValue = finalValue;
-      } else if (i >= changeIntervals.length - 3) {
-        // Third-to-last iteration: heavily bias toward final value
-        randomValue = Math.random() < 0.9 ? finalValue : Math.floor(Math.random() * 6) + 1;
-      } else if (i >= changeIntervals.length - 4) {
-        // Fourth-to-last iteration: moderate bias toward final value
-        randomValue = Math.random() < 0.6 ? finalValue : Math.floor(Math.random() * 6) + 1;
-      } else {
-        // Early iterations: completely random
-        randomValue = Math.floor(Math.random() * 6) + 1; 
-      } 
-      
-      setActiveDiceValue(randomValue);
     }
-    
-    // Use the final value that was set in the animation loop
-    setDiceValue(activeDiceValue);
-    
+
     // Store the roll for the current player
     if (currentPlayerIndex === 0) {
-      setPlayer1LastRoll(activeDiceValue);
+      setPlayer1LastRoll(finalValue);
     } else {
-      setPlayer2LastRoll(activeDiceValue);
+      setPlayer2LastRoll(finalValue);
     }
-    
     setIsRolling(false);
-    setIsSettling(true);
-    
-    // Wait for settling animation to complete
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setIsSettling(false);
     
     // Move current player
-    await movePlayer(activeDiceValue); // Use the dice value that's displayed
+    await movePlayer(finalValue); // Use the dice value that's displayed
   };
 
   // Move player with animation
