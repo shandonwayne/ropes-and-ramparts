@@ -44,9 +44,6 @@ const ChutesLaddersGame: React.FC = () => {
   // Game State
   const [players, setPlayers] = useState(GAME_CONFIG.players);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-  const [diceValue, setDiceValue] = useState(1);
-  const [activeDiceValue, setActiveDiceValue] = useState(1);
-  const [inactiveDiceValue, setInactiveDiceValue] = useState(1);
   const [player1LastRoll, setPlayer1LastRoll] = useState(1);
   const [player2LastRoll, setPlayer2LastRoll] = useState(1);
   const [gameOver, setGameOver] = useState(false);
@@ -179,6 +176,7 @@ const ChutesLaddersGame: React.FC = () => {
   };
 
   // Enhanced rope position calculation with better accuracy
+  // TODO not being used
   const calculateEnhancedRopePosition = (startPos: number, endPos: number) => {
     if (!boardRef.current) return null;
     
@@ -430,8 +428,6 @@ const ChutesLaddersGame: React.FC = () => {
   const resetGame = () => {
     setPlayers(GAME_CONFIG.players.map(player => ({ ...player, position: 0 })));
     setCurrentPlayerIndex(0);
-    setActiveDiceValue(1);
-    setInactiveDiceValue(1);
     setPlayer1LastRoll(1);
     setPlayer2LastRoll(1);
     setPlayer1State('default');
@@ -452,7 +448,6 @@ const ChutesLaddersGame: React.FC = () => {
     
     for (let row = 0; row < GAME_CONFIG.gridHeight; row++) {
       for (let col = 0; col < GAME_CONFIG.gridWidth; col++) {
-        const squareNumber = row * GAME_CONFIG.gridWidth + col + 1;
         const gamePosition = getSquareFromVisual(row, col);
         
         // Check for chutes and ladders
