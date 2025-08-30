@@ -234,10 +234,9 @@ const ChutesLaddersGame: React.FC = () => {
   };
 
   // Render complete 3D dice with all 6 faces
-  const render3DDice = (activeValue: number, inactiveValue: number, isActive: boolean) => {
+  const render3DDice = (lastRollValue: number, isActive: boolean) => {
     // For inactive players, show flat SVG instead of 3D dice
     if (!isActive) {
-      const lastRollValue = currentPlayerIndex === 0 ? player2LastRoll : player1LastRoll;
       return (
         <img 
           src={`/dice-${lastRollValue}.svg`} 
@@ -251,12 +250,13 @@ const ChutesLaddersGame: React.FC = () => {
         />
       );
     }
-    
-    const currentValue = isActive ? activeValue : inactiveValue;
-    
+  
+    const currentValue = lastRollValue;
+  
     // Define all 6 face values (opposite faces add up to 7)
     const faceValues = {
       front: currentValue,      // Current showing face
+      // BUG opposit flases when switching active state
       back: 7 - currentValue,   // Opposite face
       right: currentValue === 1 ? 2 : (currentValue === 6 ? 5 : (currentValue < 4 ? 6 : 1)),
       left: currentValue === 1 ? 5 : (currentValue === 6 ? 2 : (currentValue < 4 ? 1 : 6)),
@@ -292,6 +292,7 @@ const ChutesLaddersGame: React.FC = () => {
   };
 
   // Convert position to board coordinates (handling snake pattern)
+  // TODO not being used
   const getSquareNumber = (position: number): number => {
     if (position === 0) return 0;
     
@@ -699,7 +700,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
               {/* <div className="player-position">Position: {players[0].position}</div> */} 
             </div>
             <div 
-              className={`player-dice dice-value-${currentPlayerIndex === 0 ? activeDiceValue : inactiveDiceValue} ${
+              className={`player-dice ${
                 currentPlayerIndex === 0 && isRolling ? 'rolling' : ''
               } ${currentPlayerIndex === 0 && isSettling ? 'settling' : ''}`}
               onClick={currentPlayerIndex === 0 ? rollDice : undefined}
@@ -709,7 +710,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 pointerEvents: isRolling || isSettling ? 'none' : 'auto'
               }}
             >
-              {render3DDice(activeDiceValue, inactiveDiceValue, currentPlayerIndex === 0)}
+              {render3DDice(player1LastRoll, currentPlayerIndex === 0)}
             </div>
           </div>
           
@@ -748,7 +749,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
               {/* <div className="player-position">Position: {players[1].position}</div> */} 
             </div>
             <div 
-              className={`player-dice dice-value-${currentPlayerIndex === 1 ? activeDiceValue : inactiveDiceValue} ${
+              className={`player-dice ${
                 currentPlayerIndex === 1 && isRolling ? 'rolling' : ''
               } ${currentPlayerIndex === 1 && isSettling ? 'settling' : ''}`}
               onClick={currentPlayerIndex === 1 ? rollDice : undefined}
@@ -758,7 +759,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 pointerEvents: isRolling || isSettling ? 'none' : 'auto'
               }}
             >
-              {render3DDice(activeDiceValue, inactiveDiceValue, currentPlayerIndex === 1)}
+              {render3DDice(player2LastRoll, currentPlayerIndex === 1)}
             </div>
           </div>
         </div>
