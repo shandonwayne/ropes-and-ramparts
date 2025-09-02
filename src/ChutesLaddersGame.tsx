@@ -44,9 +44,6 @@ const ChutesLaddersGame: React.FC = () => {
   // Game State
   const [players, setPlayers] = useState(GAME_CONFIG.players);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-  const [diceValue, setDiceValue] = useState(1);
-  const [activeDiceValue, setActiveDiceValue] = useState(1);
-  const [inactiveDiceValue, setInactiveDiceValue] = useState(1);
   const [player1LastRoll, setPlayer1LastRoll] = useState(1);
   const [player2LastRoll, setPlayer2LastRoll] = useState(1);
   const [gameOver, setGameOver] = useState(false);
@@ -179,6 +176,7 @@ const ChutesLaddersGame: React.FC = () => {
   };
 
   // Enhanced rope position calculation with better accuracy
+  // TODO not being used
   const calculateEnhancedRopePosition = (startPos: number, endPos: number) => {
     if (!boardRef.current) return null;
     
@@ -234,10 +232,9 @@ const ChutesLaddersGame: React.FC = () => {
   };
 
   // Render complete 3D dice with all 6 faces
-  const render3DDice = (activeValue: number, inactiveValue: number, isActive: boolean) => {
+  const render3DDice = (lastRollValue: number, isActive: boolean) => {
     // For inactive players, show flat SVG instead of 3D dice
     if (!isActive) {
-      const lastRollValue = currentPlayerIndex === 0 ? player2LastRoll : player1LastRoll;
       return (
         <img 
           src={`/dice-${lastRollValue}.svg`} 
@@ -251,13 +248,16 @@ const ChutesLaddersGame: React.FC = () => {
         />
       );
     }
-    
-    const currentValue = isActive ? activeValue : inactiveValue;
-    
+  
+    const currentValue = lastRollValue;
+  
     // Define all 6 face values (opposite faces add up to 7)
     const faceValues = {
       front: currentValue,      // Current showing face
-      back: 7 - currentValue,   // Opposite face
+      // BUG opposite flashes when switching active state
+      // temp janky fix: comment out back styles, make same as front
+      back: currentValue,
+      // back: 7 - currentValue,   // Opposite face
       right: currentValue === 1 ? 2 : (currentValue === 6 ? 5 : (currentValue < 4 ? 6 : 1)),
       left: currentValue === 1 ? 5 : (currentValue === 6 ? 2 : (currentValue < 4 ? 1 : 6)),
       top: currentValue === 1 ? 3 : (currentValue === 6 ? 4 : (currentValue === 2 ? 1 : (currentValue === 5 ? 6 : (currentValue === 3 ? 2 : 5)))),
@@ -292,6 +292,7 @@ const ChutesLaddersGame: React.FC = () => {
   };
 
   // Convert position to board coordinates (handling snake pattern)
+  // TODO not being used
   const getSquareNumber = (position: number): number => {
     if (position === 0) return 0;
     
@@ -341,52 +342,21 @@ const ChutesLaddersGame: React.FC = () => {
     const finalValue = Math.floor(Math.random() * 6) + 1;
     
     // Animate dice face changes during rolling with smooth transition to final value
-    const rollDuration = 2000; // 2.2 seconds total
     const changeIntervals = [120, 140, 160, 180, 220, 260, 320]; // Removed last interval to prevent jump
-    let currentTime = 0;
-    
     for (let i = 0; i < changeIntervals.length; i++) {
       await new Promise(resolve => setTimeout(resolve, changeIntervals[i]));
-      currentTime += changeIntervals[i];
-      
-      // Gradually bias toward final value, with final value guaranteed in last few iterations
-      let randomValue;
-      if (i >= changeIntervals.length) {
-        // Last two iterations: always show final value
-        randomValue = finalValue;
-      } else if (i >= changeIntervals.length - 3) {
-        // Third-to-last iteration: heavily bias toward final value
-        randomValue = Math.random() < 0.9 ? finalValue : Math.floor(Math.random() * 6) + 1;
-      } else if (i >= changeIntervals.length - 4) {
-        // Fourth-to-last iteration: moderate bias toward final value
-        randomValue = Math.random() < 0.6 ? finalValue : Math.floor(Math.random() * 6) + 1;
-      } else {
-        // Early iterations: completely random
-        randomValue = Math.floor(Math.random() * 6) + 1; 
-      } 
-      
-      setActiveDiceValue(randomValue);
     }
-    
-    // Use the final value that was set in the animation loop
-    setDiceValue(activeDiceValue);
-    
+
     // Store the roll for the current player
     if (currentPlayerIndex === 0) {
-      setPlayer1LastRoll(activeDiceValue);
+      setPlayer1LastRoll(finalValue);
     } else {
-      setPlayer2LastRoll(activeDiceValue);
+      setPlayer2LastRoll(finalValue);
     }
-    
     setIsRolling(false);
-    setIsSettling(true);
-    
-    // Wait for settling animation to complete
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setIsSettling(false);
     
     // Move current player
-    await movePlayer(activeDiceValue); // Use the dice value that's displayed
+    await movePlayer(finalValue); // Use the dice value that's displayed
   };
 
   // Move player with animation
@@ -460,8 +430,6 @@ const ChutesLaddersGame: React.FC = () => {
   const resetGame = () => {
     setPlayers(GAME_CONFIG.players.map(player => ({ ...player, position: 0 })));
     setCurrentPlayerIndex(0);
-    setActiveDiceValue(1);
-    setInactiveDiceValue(1);
     setPlayer1LastRoll(1);
     setPlayer2LastRoll(1);
     setPlayer1State('default');
@@ -482,7 +450,6 @@ const ChutesLaddersGame: React.FC = () => {
     
     for (let row = 0; row < GAME_CONFIG.gridHeight; row++) {
       for (let col = 0; col < GAME_CONFIG.gridWidth; col++) {
-        const squareNumber = row * GAME_CONFIG.gridWidth + col + 1;
         const gamePosition = getSquareFromVisual(row, col);
         
         // Check for chutes and ladders
@@ -730,7 +697,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
               {/* <div className="player-position">Position: {players[0].position}</div> */} 
             </div>
             <div 
-              className={`player-dice dice-value-${currentPlayerIndex === 0 ? activeDiceValue : inactiveDiceValue} ${
+              className={`player-dice ${
                 currentPlayerIndex === 0 && isRolling ? 'rolling' : ''
               } ${currentPlayerIndex === 0 && isSettling ? 'settling' : ''}`}
               onClick={currentPlayerIndex === 0 ? rollDice : undefined}
@@ -740,7 +707,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 pointerEvents: isRolling || isSettling ? 'none' : 'auto'
               }}
             >
-              {render3DDice(activeDiceValue, inactiveDiceValue, currentPlayerIndex === 0)}
+              {render3DDice(player1LastRoll, currentPlayerIndex === 0)}
             </div>
           </div>
           
@@ -779,7 +746,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
               {/* <div className="player-position">Position: {players[1].position}</div> */} 
             </div>
             <div 
-              className={`player-dice dice-value-${currentPlayerIndex === 1 ? activeDiceValue : inactiveDiceValue} ${
+              className={`player-dice ${
                 currentPlayerIndex === 1 && isRolling ? 'rolling' : ''
               } ${currentPlayerIndex === 1 && isSettling ? 'settling' : ''}`}
               onClick={currentPlayerIndex === 1 ? rollDice : undefined}
@@ -789,7 +756,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
                 pointerEvents: isRolling || isSettling ? 'none' : 'auto'
               }}
             >
-              {render3DDice(activeDiceValue, inactiveDiceValue, currentPlayerIndex === 1)}
+              {render3DDice(player2LastRoll, currentPlayerIndex === 1)}
             </div>
           </div>
         </div>
