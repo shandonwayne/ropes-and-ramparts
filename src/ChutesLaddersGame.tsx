@@ -671,7 +671,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
             <div className="player-title">
               <img src="/SirRowan-Name.svg" alt="Sir Rowan" style={{ width: '100%', height: 'auto' }} />
             </div>
-            <div className="character-illustration">
+            <div className="character-illustration rowan">
               <img 
                 src={getCharacterImage(1, currentPlayerIndex === 0)}
                 alt="Sir Rowan" 
@@ -720,7 +720,7 @@ const getCharacterImage = (playerId: number, isActive: boolean) => {
             <div className="player-title">
               <img src="/LadyIsolde-Name.svg" alt="Lady Isolde" style={{ width: '100%', height: 'auto' }} />
             </div>
-            <div className="character-illustration">
+            <div className="character-illustration isolde">
               <img 
                 src={getCharacterImage(2, currentPlayerIndex === 1)}
                 alt="Lady Isolde" 

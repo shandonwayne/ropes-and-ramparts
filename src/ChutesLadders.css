@@ -199,20 +199,18 @@ body {
   justify-content: center;
   width: 100%;
   min-height: 300px;
-  background-image: url('/public/Isolde.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-/* Character Illustration Rowan */
-.character-illustration.Isolde {
+/* Character Illustration Isolde */
+.character-illustration.isolde {
   background-image: url('/public/Isolde.svg');
 }
 
-
 /* Character Illustration Rowan */
-.character-illustration.Rowan {
+.character-illustration.rowan {
   background-image: url('/public/SirRowan.svg');
 }
 
