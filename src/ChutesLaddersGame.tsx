@@ -599,20 +599,10 @@ const ChutesLaddersGame: React.FC = () => {
 
 // Get character image based on player state and activity
 const getCharacterImage = (playerId: number, isActive: boolean) => {
-  const playerState = playerId === 1 ? player1State : player2State;
-  
   if (playerId === 1) {
-    // Sir Rowan
-    if (playerState === 'failure') {
-      return "/Rowan-Failure.svg";
-    }
-    return "/SirRowan.svg"; // Default for both active and inactive
+    return "/SirRowan.svg";
   } else {
-    // Lady Isolde
-    if (playerState === 'failure') {
-      return "/Isolde-Failure.svg";
-    }
-    return isActive ? "/Isolde-Final-Active.svg" : "/Isolde.svg";
+    return "/Isolde.svg";
   }
 };
 
