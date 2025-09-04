@@ -414,12 +414,12 @@ body {
 
 /* Move active player dice up */
 .player-panel.active .player-dice {
-  transform: translateY(-30px);
+  transform: translateY(0);
 }
 
 /* Ensure hover effect still works for active dice */
 .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
-  transform: translateY(-32px) scale(1.05) rotateX(-5deg) rotateY(5deg);
+  transform: translateY(-2px) scale(1.05) rotateX(-5deg) rotateY(5deg);
 }
 
 /* Enhanced disabled state transition */
@@ -1096,11 +1096,11 @@ body {
   
   /* Adjust active player dice positioning for mobile */
   .player-panel.active .player-dice {
-    transform: translateY(-15px); /* Reduced lift for mobile */
+    transform: translateY(0); /* No lift for mobile */
   }
   
   .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
-    transform: translateY(-17px) scale(1.05) rotateX(-5deg) rotateY(5deg);
+    transform: translateY(-2px) scale(1.05) rotateX(-5deg) rotateY(5deg);
   }
   
   /* Ensure proper spacing in horizontal layout */
@@ -1205,11 +1205,11 @@ body {
   
   /* Adjust active dice positioning for stacked layout */
   .player-panel.active .player-dice {
-    transform: translateY(-10px); /* Smaller lift for stacked layout */
+    transform: translateY(0); /* No lift for stacked layout */
   }
   
   .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
-    transform: translateY(-12px) scale(1.05) rotateX(-5deg) rotateY(5deg);
+    transform: translateY(-2px) scale(1.05) rotateX(-5deg) rotateY(5deg);
   }
   
   .game-title {
