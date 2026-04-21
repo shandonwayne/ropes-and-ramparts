@@ -1,6 +1,5 @@
-/* CSS Custom Properties - Matching reference design colors */
+/* CSS Custom Properties */
 :root {
-  /* New Color System */
   --Pink: #E08FB5FF;
   --Plum: #621B39FF;
   --Tangerine: #F57B35FF;
@@ -11,46 +10,33 @@
   --Black: #1B1B1BFF;
   --Iron: #3A342EFF;
   --GoblinSkin: #A0BD92FF;
-  
-  /* Player Colors */
   --player1-color: #ef4444;
   --player2-color: #3b82f6;
-  
-  /* Spacing System (8px base) */
-  --space-xs: 0.25rem;  /* 4px */
-  --space-sm: 0.5rem;   /* 8px */
-  --space-md: 1rem;     /* 16px */
-  --space-lg: 1.5rem;   /* 24px */
-  --space-xl: 2rem;     /* 32px */
-  --space-2xl: 3rem;    /* 48px */
-  
-  /* Sizing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
   --square-size: 50px;
   --player-size: 20px;
   --dice-size: 60px;
   --border-radius: 12px;
   --border-radius-lg: 16px;
-  
-  /* Typography */
   --font-family: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   --title-font-family: 'UnifrakturCook', serif;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
   --font-weight-black: 900;
-  
-  /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  
-  /* Animation */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 300ms ease-in-out;
   --transition-slow: 500ms ease-in-out;
 }
 
-/* Global Styles */
 * {
   box-sizing: border-box;
 }
@@ -63,47 +49,437 @@ body {
   min-height: 100vh;
 }
 
-/* Temporary Testing Buttons */
-.testing-buttons {
-  position: fixed;
-  top: 20px;
-  right: 20px;
+/* ===== PRE-GAME SCREEN ===== */
+
+.pregame-screen {
   display: flex;
-  gap: 10px;
-  z-index: 9999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-xl);
 }
 
-.test-button {
-  padding: 8px 16px;
+.pregame-card {
+  background: var(--Black);
+  border-radius: 20px;
+  padding: var(--space-2xl) var(--space-2xl);
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--Iron);
+}
+
+.pregame-title {
+  font-family: var(--title-font-family);
+  font-size: 3.2rem;
+  color: var(--Pebble);
+  margin: 0 0 var(--space-xs) 0;
+  line-height: 1.1;
+}
+
+.pregame-subtitle {
+  color: var(--Wyrmwood);
+  font-size: 1rem;
+  margin: 0 0 var(--space-xl) 0;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-medium);
+}
+
+.pregame-players {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.pregame-player-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--Iron);
+  border-radius: var(--border-radius);
+  padding: var(--space-md);
+}
+
+.pregame-token {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.pregame-input-group {
+  flex: 1;
+  text-align: left;
+}
+
+.pregame-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--Wyrmwood);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  font-weight: var(--font-weight-bold);
+}
+
+.pregame-input {
+  width: 100%;
+  background: transparent;
   border: none;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: bold;
+  border-bottom: 2px solid var(--Wyrmwood);
+  color: var(--Pebble);
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-bold);
+  padding: 4px 0;
+  outline: none;
+  transition: border-color var(--transition-normal);
+}
+
+.pregame-input:focus {
+  border-bottom-color: var(--Pebble);
+}
+
+.rowan-input:focus {
+  border-bottom-color: var(--Tangerine);
+}
+
+.isolde-input:focus {
+  border-bottom-color: var(--Pink);
+}
+
+.pregame-vs {
+  color: var(--Wyrmwood);
+  font-family: 'Anton', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+}
+
+.pregame-start-btn {
+  width: 100%;
+  padding: var(--space-md) var(--space-xl);
+  background: linear-gradient(135deg, var(--Tangerine), #E6A855);
+  border: none;
+  border-radius: var(--border-radius);
+  color: var(--Black);
+  font-family: 'Anton', sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  color: white;
-  transition: all 0.2s ease;
-  display:none;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
 }
 
-.isolde-test {
-  background: var(--Pink);
+.pregame-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245, 123, 53, 0.35);
 }
 
-.isolde-test:hover {
-  background: #D67BA5;
-  transform: translateY(-1px);
+.pregame-start-btn:active {
+  transform: translateY(0);
 }
 
-.rowan-test {
+.pregame-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin-top: var(--space-lg);
+}
+
+.pregame-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--Wyrmwood);
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.pregame-link:hover {
+  color: var(--Pebble);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pregame-characters {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.15;
+}
+
+.pregame-char-left,
+.pregame-char-right {
+  height: 50vh;
+  max-height: 500px;
+}
+
+.pregame-char-left {
+  transform: translateX(-20%);
+}
+
+.pregame-char-right {
+  transform: translateX(20%);
+}
+
+/* ===== MODAL STYLES ===== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: var(--space-xl);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: var(--Black);
+  border-radius: 20px;
+  padding: var(--space-2xl);
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  border: 2px solid var(--Iron);
+  animation: modalSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: none;
+  border: none;
+  color: var(--Wyrmwood);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: var(--Pebble);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.5rem;
+  color: var(--Pebble);
+  margin: 0 0 var(--space-lg) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ===== RULES MODAL ===== */
+
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  text-align: left;
+}
+
+.rule-number {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--Iron);
+  color: var(--Pebble);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: 0.85rem;
+}
+
+.rule-item p {
+  margin: 0;
+  color: var(--Pebble);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding-top: 3px;
+}
+
+.text-ladder {
+  color: var(--Tangerine);
+  font-weight: var(--font-weight-bold);
+}
+
+.text-chute {
+  color: #888;
+  font-weight: var(--font-weight-bold);
+}
+
+kbd {
+  background: var(--Iron);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  color: var(--Pebble);
+  border: 1px solid var(--Wyrmwood);
+}
+
+/* ===== LEADERBOARD ===== */
+
+.leaderboard-empty {
+  color: var(--Wyrmwood);
+  text-align: center;
+  padding: var(--space-xl) 0;
+  font-size: 0.95rem;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th {
+  color: var(--Wyrmwood);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: var(--space-sm) var(--space-sm);
+  text-align: left;
+  border-bottom: 1px solid var(--Iron);
+  font-weight: var(--font-weight-bold);
+}
+
+.leaderboard-table td {
+  color: var(--Pebble);
+  font-size: 0.9rem;
+  padding: var(--space-sm) var(--space-sm);
+  border-bottom: 1px solid rgba(58, 52, 46, 0.5);
+}
+
+.leaderboard-table .rank-cell {
+  font-weight: var(--font-weight-bold);
+  width: 30px;
+}
+
+.leaderboard-table .name-cell {
+  font-weight: var(--font-weight-bold);
+}
+
+.leaderboard-table tr.top-1 td {
+  color: #FFBC2E;
+}
+
+.leaderboard-table tr.top-2 td {
+  color: var(--Pebble);
+}
+
+.leaderboard-table tr.top-3 td {
+  color: #CD7F32;
+}
+
+/* ===== GAME TOOLBAR ===== */
+
+.game-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.toolbar-btn {
+  background: var(--Iron);
+  border: none;
+  color: var(--Pebble);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.toolbar-btn:hover {
+  background: var(--Wyrmwood);
+}
+
+.turn-indicator {
+  color: var(--Pebble);
+  font-weight: var(--font-weight-bold);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  letter-spacing: 0.02em;
+}
+
+.turn-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.player-1-dot {
   background: var(--Tangerine);
 }
 
-.rowan-test:hover {
-  background: #E6A855;
-  transform: translateY(-1px);
+.player-2-dot {
+  background: var(--Pink);
 }
 
-/* Game Container */
+.turn-counter {
+  color: var(--Wyrmwood);
+  font-size: 0.85rem;
+  font-weight: var(--font-weight-medium);
+}
+
+/* ===== GAME CONTAINER ===== */
+
 .game-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -112,34 +488,30 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--space-xl);
+  gap: var(--space-md);
   background: #5B4B3D;
 }
 
-/* Game Header */
-.game-header {
-  text-align: center;
-  padding:0;
-}
+/* ===== MAIN GAME LAYOUT ===== */
 
-.game-title {
-  margin: 0;
-  font-size: 4rem;
-  font-family: var(--title-font-family);
-  font-weight: var(--font-weight-black);
-  color: var(--Black);
-}
-
-/* Main Game Layout */
 .game-main {
   display: grid;
   grid-template-columns: 200px 1fr 200px;
-  gap: var(--space-md); 
+  gap: var(--space-md);
   align-items: start;
   justify-items: center;
 }
 
-/* Player Panels */
+.board-and-log {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: var(--space-md);
+}
+
+/* ===== PLAYER PANELS ===== */
+
 .player-panel {
   background: var(--Black);
   border-radius: var(--border-radius-lg);
@@ -155,24 +527,14 @@ body {
   position: relative;
   border: 3px solid transparent;
   transition: all var(--transition-normal);
-  perspective: 1000px; /* Add perspective for 3D dice */
+  perspective: 1000px;
 }
 
-.player-panel.active {
-  background: var(--Black);
-}
-
-.player-panel.inactive {
-  background: var(--Black);
-}
-
-/* Sir Rowan (Player 1) active outline */
 .player-panel:nth-child(1).active {
   border-color: var(--Tangerine);
   box-shadow: 0 0 20px rgba(245, 123, 53, 0.3);
 }
 
-/* Lady Isolde (Player 2) active outline */
 .player-panel:nth-child(3).active {
   border-color: var(--Pink);
   box-shadow: 0 0 20px rgba(224, 143, 181, 0.3);
@@ -191,7 +553,6 @@ body {
   color: var(--Pebble);
 }
 
-/* Character Illustration Area */
 .character-illustration {
   flex: 1;
   display: flex;
@@ -204,33 +565,14 @@ body {
   background-position: center;
 }
 
-/* Character Illustration Isolde */
-.character-illustration.isolde {
-  background-image: url('/public/Isolde.svg');
-}
-
-/* Character Illustration Rowan */
-.character-illustration.rowan {
-  background-image: url('/public/SirRowan.svg');
-}
-
 .player-info-display {
   text-align: center;
   color: var(--Pebble);
   font-weight: var(--font-weight-medium);
 }
 
-.player-panel.inactive .player-info-display {
-  color: var(--Pebble);
-}
+/* ===== DICE ===== */
 
-.player-position {
-  font-size: 1.25rem;
-  font-weight: var(--font-weight-bold);
-  margin: var(--space-sm) 0;
-}
-
-/* Dice in Player Panel */ 
 .player-dice {
   width: 60px;
   height: 60px;
@@ -246,7 +588,6 @@ body {
   perspective: 1000px;
 }
 
-/* 3D Dice Faces */
 .dice-face {
   position: absolute;
   width: 60px;
@@ -254,74 +595,35 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* border: 2px solid var(--Black); */
-  border-radius: 10%;
   border-radius: var(--border-radius);
   font-weight: bold;
   font-size: 14px;
   color: var(--Black);
-  /* box-shadow: inset 0 0 10px rgba(0,0,0,0.1); */ 
 }
 
-/* Player 1 dice faces - Tangerine */
 .player-panel:nth-child(1) .dice-face {
   background: #FFBC2E;
 }
 
-/* Player 2 dice faces - Pink */
 .player-panel:nth-child(3) .dice-face {
   background: var(--Pink);
 }
 
-/* Face positioning in 3D space */
-.dice-face.front {
-  transform: rotateY(0deg) translateZ(30px);
-}
+.dice-face.front  { transform: rotateY(0deg) translateZ(30px); }
+.dice-face.back   { transform: rotateY(180deg) translateZ(30px); }
+.dice-face.right  { transform: rotateY(90deg) translateZ(30px); }
+.dice-face.left   { transform: rotateY(-90deg) translateZ(30px); }
+.dice-face.top    { transform: rotateX(90deg) translateZ(30px); }
+.dice-face.bottom { transform: rotateX(-90deg) translateZ(30px); }
 
-.dice-face.back {
-  transform: rotateY(180deg) translateZ(30px);
-}
-
-.dice-face.right {
-  transform: rotateY(90deg) translateZ(30px);
-}
-
-.dice-face.left {
-  transform: rotateY(-90deg) translateZ(30px);
-}
-
-.dice-face.top {
-  transform: rotateX(90deg) translateZ(30px);
-}
-
-.dice-face.bottom {
-  transform: rotateX(-90deg) translateZ(30px);
-}
-
-/* Dice dots */
-.dice-dot {
-  width: 12px;
-  height: 12px;
-  background: var(--Black);
-  border-radius: 50%;
-  position: absolute;
-}
-
-/* Inactive state styling */
-.player-panel.inactive .player-dice {
-  opacity: 0.7;
-}
-
-.player-panel.inactive .dice-dot {
-  background: var(--Black);
-}
-
-/* Dice symbols styling */
 .dice-face img {
   width: 95%;
   height: 95%;
 }
 
+.player-panel.inactive .player-dice {
+  opacity: 0.7;
+}
 
 .player-dice:hover:not(:disabled) {
   transform: translateY(-2px);
@@ -338,71 +640,34 @@ body {
   transform-style: preserve-3d;
 }
 
-/* Enhanced 3D dice rolling animation with realistic physics */
 @keyframes rollDice3D {
-  0% { 
-    transform: translateY(-30px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
-  }
-  10% { 
-    transform: translateY(-30px) rotateX(180deg) rotateY(90deg) rotateZ(45deg) scale(1.05);
-  }
-  20% { 
-    transform: translateY(-30px) rotateX(360deg) rotateY(180deg) rotateZ(90deg) scale(1.1);
-  }
-  30% { 
-    transform: translateY(-30px) rotateX(540deg) rotateY(270deg) rotateZ(135deg) scale(0.95);
-  }
-  40% { 
-    transform: translateY(-30px) rotateX(720deg) rotateY(360deg) rotateZ(180deg) scale(1.08);
-  }
-  50% { 
-    transform: translateY(-30px) rotateX(900deg) rotateY(450deg) rotateZ(225deg) scale(0.92);
-  }
-  60% { 
-    transform: translateY(-30px) rotateX(1080deg) rotateY(540deg) rotateZ(270deg) scale(1.06);
-  }
-  70% { 
-    transform: translateY(-30px) rotateX(1260deg) rotateY(630deg) rotateZ(315deg) scale(0.96);
-  }
-  80% { 
-    transform: translateY(-30px) rotateX(1440deg) rotateY(720deg) rotateZ(360deg) scale(1.03);
-  }
-  90% { 
-    transform: translateY(-30px) rotateX(1620deg) rotateY(810deg) rotateZ(405deg) scale(0.98);
-  }
-  95% { 
-    transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1.01);
-  }
-  100% { 
-    transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1);
-  }
+  0%   { transform: translateY(-30px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1); }
+  10%  { transform: translateY(-30px) rotateX(180deg) rotateY(90deg) rotateZ(45deg) scale(1.05); }
+  20%  { transform: translateY(-30px) rotateX(360deg) rotateY(180deg) rotateZ(90deg) scale(1.1); }
+  30%  { transform: translateY(-30px) rotateX(540deg) rotateY(270deg) rotateZ(135deg) scale(0.95); }
+  40%  { transform: translateY(-30px) rotateX(720deg) rotateY(360deg) rotateZ(180deg) scale(1.08); }
+  50%  { transform: translateY(-30px) rotateX(900deg) rotateY(450deg) rotateZ(225deg) scale(0.92); }
+  60%  { transform: translateY(-30px) rotateX(1080deg) rotateY(540deg) rotateZ(270deg) scale(1.06); }
+  70%  { transform: translateY(-30px) rotateX(1260deg) rotateY(630deg) rotateZ(315deg) scale(0.96); }
+  80%  { transform: translateY(-30px) rotateX(1440deg) rotateY(720deg) rotateZ(360deg) scale(1.03); }
+  90%  { transform: translateY(-30px) rotateX(1620deg) rotateY(810deg) rotateZ(405deg) scale(0.98); }
+  95%  { transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1.01); }
+  100% { transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1); }
 }
 
-/* Subtle bounce effect when dice settles */
 .player-dice.settling {
   animation: diceSettle3D 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   transform-style: preserve-3d;
 }
 
 @keyframes diceSettle3D {
-  0% { 
-    transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1);
-  }
-  25% { 
-    transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1.04);
-  }
-  50% { 
-    transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(0.97);
-  }
-  75% { 
-    transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1.01);
-  }
-  100% { 
-    transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1);
-  }
+  0%   { transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1); }
+  25%  { transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1.04); }
+  50%  { transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(0.97); }
+  75%  { transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1.01); }
+  100% { transform: translateY(-30px) rotateX(1800deg) rotateY(900deg) rotateZ(450deg) scale(1); }
 }
 
-/* Hover effect with smooth transition */
 .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
   transform: translateY(-2px) scale(1.05) rotateX(-5deg) rotateY(5deg);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -410,24 +675,16 @@ body {
   transform-style: preserve-3d;
 }
 
-/* Move active player dice up */
 .player-panel.active .player-dice {
   transform: translateY(-30px);
 }
 
-/* Ensure hover effect still works for active dice */
 .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
   transform: translateY(-32px) scale(1.05) rotateX(-5deg) rotateY(5deg);
 }
 
-/* Enhanced disabled state transition */
-.player-dice:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transition: opacity 0.4s ease-out;
-}
+/* ===== GAME BOARD ===== */
 
-/* Game Board */
 .game-board {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -443,7 +700,6 @@ body {
   border: #1B1B1B solid 4px;
 }
 
-/* Game Squares - Checkerboard Pattern */
 .game-square {
   display: flex;
   flex-direction: column;
@@ -457,18 +713,7 @@ body {
   border-radius: 5px;
 }
 
-/* Checkerboard pattern - Iron and Black with Pebble numbers */
-.game-square:nth-child(odd) {
-  background: var(--Iron);
-  color: var(--Pebble);
-}
-
-.game-square:nth-child(even) {
-  background: var(--Black);
-  color: var(--Pebble);
-}
-
-/* Override for proper checkerboard pattern accounting for row breaks */
+/* Checkerboard pattern */
 .game-square:nth-child(10n+1),
 .game-square:nth-child(10n+3),
 .game-square:nth-child(10n+5),
@@ -487,7 +732,6 @@ body {
   color: var(--Pebble);
 }
 
-/* Alternate rows for proper checkerboard */
 .game-square:nth-child(n+11):nth-child(-n+20):nth-child(odd),
 .game-square:nth-child(n+31):nth-child(-n+40):nth-child(odd),
 .game-square:nth-child(n+51):nth-child(-n+60):nth-child(odd),
@@ -506,6 +750,13 @@ body {
   color: var(--Pebble);
 }
 
+/* Highlighted squares (reachable) */
+.game-square.highlighted-square {
+  outline: 2px solid rgba(255, 188, 46, 0.45);
+  outline-offset: -2px;
+  z-index: 10;
+}
+
 .square-number {
   font-size: 1rem;
   font-weight: var(--font-weight-bold);
@@ -517,24 +768,27 @@ body {
   z-index: 1;
 }
 
-/* Chutes and Ladders Indicators */
-.chute-indicator,
-.ladder-indicator {
-  font-size: 0.7rem;
-  font-weight: var(--font-weight-medium);
-  text-align: center;
+/* Square badges for chutes/ladders */
+.square-badge {
   position: absolute;
   bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 1px 4px;
-  border-radius: 4px;
-  color: var(--Black);
+  right: 3px;
+  font-size: 0.55rem;
+  z-index: 2;
+  opacity: 0.6;
+  line-height: 1;
 }
 
-/* Player Pieces */
+.chute-badge {
+  color: #888;
+}
+
+.ladder-badge {
+  color: var(--Tangerine);
+}
+
+/* ===== PLAYER PIECES ===== */
+
 .players-container {
   display: flex;
   gap: 2px;
@@ -564,14 +818,8 @@ body {
 }
 
 @keyframes pieceAppear {
-  from {
-    transform: scale(0);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .player-piece:hover {
@@ -579,12 +827,181 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-/* Game Controls - Hidden in new layout */
-.game-controls {
-  display: none;
+/* ===== FLOATING INDICATORS ===== */
+
+.floating-indicator {
+  position: absolute;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  pointer-events: none;
+  z-index: 300;
+  animation: floatUp 1.8s ease-out forwards;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%);
 }
 
-/* Game Over */
+.floating-indicator.chute {
+  color: #ff6b6b;
+}
+
+.floating-indicator.ladder {
+  color: #51cf66;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-40px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-70px) scale(0.8);
+  }
+}
+
+/* ===== MOVE LOG ===== */
+
+.move-log {
+  width: 100%;
+  max-width: 900px;
+  background: var(--Black);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 1px solid var(--Iron);
+}
+
+.move-log-header {
+  padding: var(--space-sm) var(--space-md);
+  font-family: 'Anton', sans-serif;
+  font-size: 0.85rem;
+  color: var(--Wyrmwood);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid var(--Iron);
+}
+
+.move-log-entries {
+  max-height: 120px;
+  overflow-y: auto;
+  padding: var(--space-xs);
+  scrollbar-width: thin;
+  scrollbar-color: var(--Iron) transparent;
+}
+
+.move-log-entries::-webkit-scrollbar {
+  width: 4px;
+}
+
+.move-log-entries::-webkit-scrollbar-thumb {
+  background: var(--Iron);
+  border-radius: 2px;
+}
+
+.move-log-empty {
+  color: var(--Wyrmwood);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: var(--space-md);
+  font-style: italic;
+}
+
+.move-log-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: 4px var(--space-sm);
+  border-radius: 4px;
+  font-size: 0.78rem;
+  color: var(--Pebble);
+  line-height: 1.4;
+  transition: background var(--transition-fast);
+}
+
+.move-log-entry:last-child {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.move-log-turn {
+  color: var(--Wyrmwood);
+  font-size: 0.68rem;
+  flex-shrink: 0;
+  min-width: 22px;
+  font-weight: var(--font-weight-bold);
+  padding-top: 1px;
+}
+
+.move-log-icon {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  width: 14px;
+  text-align: center;
+  padding-top: 1px;
+}
+
+.move-log-icon.chute { color: #ff6b6b; }
+.move-log-icon.ladder { color: #51cf66; }
+.move-log-icon.win { color: #FFBC2E; }
+.move-log-icon.move { color: var(--Wyrmwood); }
+
+.move-log-text {
+  flex: 1;
+}
+
+.player-1-entry {
+  border-left: 2px solid var(--Tangerine);
+}
+
+.player-2-entry {
+  border-left: 2px solid var(--Pink);
+}
+
+/* ===== CONFETTI ===== */
+
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1001;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confettiFall 3s ease-in forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translateY(-10vh) rotate(0deg) scale(var(--scale, 1));
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(25vh) translateX(var(--speed-x, 2vw)) rotate(180deg) scale(var(--scale, 1));
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(50vh) translateX(calc(var(--speed-x, 2vw) * -0.5)) rotate(360deg) scale(var(--scale, 1));
+  }
+  75% {
+    opacity: 0.6;
+    transform: translateY(75vh) translateX(var(--speed-x, 2vw)) rotate(540deg) scale(var(--scale, 1));
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(110vh) translateX(calc(var(--speed-x, 2vw) * 0.8)) rotate(720deg) scale(var(--scale, 1));
+  }
+}
+
+/* ===== VICTORY SCREEN ===== */
+
 .game-over {
   text-align: center;
   grid-column: 1 / -1;
@@ -609,23 +1026,12 @@ body {
 }
 
 @keyframes victoryAppear {
-  from {
-    transform: scale(0.8) translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+  from { transform: scale(0.8) translateY(50px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-.isolde-modal {
-  background: linear-gradient(135deg, var(--Pink) 0%, #D67BA5 100%);
-}
-
-.rowan-modal {
-  background: linear-gradient(135deg, #E6A855 0%, #E6A855 100%);
-}
+.isolde-modal { background: linear-gradient(135deg, var(--Pink) 0%, #D67BA5 100%); }
+.rowan-modal  { background: linear-gradient(135deg, #E6A855 0%, #E6A855 100%); }
 
 .victory-content {
   display: flex;
@@ -636,41 +1042,13 @@ body {
   padding-right: 400px;
 }
 
-/* Isolde-specific layout (text left, character right) */
-.isolde-modal .victory-content {
-  flex-direction: row;
-}
+.isolde-modal .victory-content { flex-direction: row; }
+.isolde-modal .victory-text { flex: 1; text-align: left; order: 1; }
+.isolde-modal .victory-character { position: absolute; right: 0; order: 2; bottom: 0; }
 
-.isolde-modal .victory-text {
-  flex: 1;
-  text-align: left;
-  order: 1;
-}
-
-.isolde-modal .victory-character {
-    position: absolute;
-    right: 0;
-    order: 2;
-    bottom: 0;
-}
-
-/* Rowan-specific layout (character left, text right) */
-.rowan-modal .victory-content {
-  flex-direction: row;
-}
-
-.rowan-modal .victory-text {
-  flex: 1;
-  text-align: left;
-  order: 2;
-}
-
-.rowan-modal .victory-character {
-    position: absolute;
-    right: 0;
-    order: 2;
-    bottom: 0;
-}
+.rowan-modal .victory-content { flex-direction: row; }
+.rowan-modal .victory-text { flex: 1; text-align: left; order: 2; }
+.rowan-modal .victory-character { position: absolute; right: 0; order: 2; bottom: 0; }
 
 .glory-title {
   min-width: 400px;
@@ -693,36 +1071,24 @@ body {
   color: var(--Black);
 }
 
-.victory-title {
-  font-family: var(--title-font-family);
-  font-size: 2.5rem;
-  font-weight: var(--font-weight-black);
-  margin: 0 0 var(--space-sm) 0;
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
 .victory-subtitle {
   font-size: 1.85rem;
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--space-xl) 0;
   text-transform: uppercase;
   margin-top: .5rem;
-  letter-spacing:.05rem;
+  letter-spacing: .05rem;
 }
 
-/* Isolde-specific subtitle styling */
 .isolde-modal .victory-subtitle {
   font-family: 'Anton', sans-serif;
-  font-weight: 400; /* Anton is naturally bold */
+  font-weight: 400;
   color: #621B39;
 }
 
-/* Rowan-specific subtitle styling */
 .rowan-modal .victory-subtitle {
   font-family: 'Anton', sans-serif;
-  font-weight: 400; /* Anton is naturally bold */
+  font-weight: 400;
   color: #1B1B1B;
 }
 
@@ -736,17 +1102,12 @@ body {
   transition: all var(--transition-normal);
   text-transform: uppercase;
   letter-spacing: 0.025em;
-  color:white;
+  color: white;
   font-family: 'Anton', sans-serif;
 }
 
-.rowan-modal .play-again-button{
-  color: #FFBC2E;
-}
-
-.isolde-modal .play-again-button{
-  color: #E08FB5;
-}
+.rowan-modal .play-again-button { color: #FFBC2E; }
+.isolde-modal .play-again-button { color: #E08FB5; }
 
 .play-again-button:hover {
   background: var(--Iron);
@@ -754,42 +1115,193 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-.winner-announcement {
-  font-size: 2.5rem;
-  font-weight: var(--font-weight-black);
-  color: var(--Black);
-  margin: 0 0 var(--space-lg) 0;
-  text-transform: uppercase;
-  animation: celebrate 1s ease-in-out infinite alternate;
+/* ===== RESPONSIVE: 1200px ===== */
+
+@media (max-width: 1200px) {
+  .game-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: var(--space-lg);
+  }
+
+  .player-panel {
+    min-height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    min-height: 120px;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+
+  .player-title {
+    flex: 0 0 auto;
+    max-width: 150px;
+    font-size: 1.3rem;
+    min-width: 100px;
+  }
+
+  .player-title img {
+    width: 100%;
+    height: auto;
+    max-height: 50px;
+    object-fit: contain;
+  }
+
+  .character-illustration {
+    display: none;
+  }
+
+  .player-info-display {
+    flex: 0 0 auto;
+    text-align: center;
+    min-width: 80px;
+  }
+
+  .player-dice {
+    flex: 0 0 auto;
+    margin-top: 0;
+    margin-left: 0;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    position: relative;
+    margin-top: 5%;
+    margin-right: 2%;
+  }
+
+  .dice-face {
+    width: 60px;
+    height: 60px;
+    font-size: 14px;
+  }
+
+  .dice-face.front  { transform: rotateY(0deg) translateZ(30px); }
+  .dice-face.right  { transform: rotateY(90deg) translateZ(30px); }
+  .dice-face.left   { transform: rotateY(-90deg) translateZ(30px); }
+  .dice-face.top    { transform: rotateX(90deg) translateZ(30px); }
+  .dice-face.bottom { transform: rotateX(-90deg) translateZ(30px); }
+
+  .player-panel.active .player-dice {
+    transform: translateY(-20px);
+  }
+
+  .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
+    transform: translateY(-22px) scale(1.05) rotateX(-5deg) rotateY(5deg);
+  }
+
+  .game-container {
+    padding: var(--space-lg);
+    gap: var(--space-lg);
+  }
+
+  .game-board {
+    max-width: 100%;
+  }
+
+  .move-log-entries {
+    max-height: 80px;
+  }
+
+  .pregame-characters {
+    display: none;
+  }
 }
 
-@keyframes celebrate {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
-}
+/* ===== RESPONSIVE: 768px ===== */
 
-.reset-button {
-  background: var(--Black);
-  color: var(--Pink);
-  border: none;
-  padding: var(--space-md) var(--space-xl);
-  border-radius: var(--border-radius);
-  font-size: 1.25rem;
-  font-weight: var(--font-weight-bold);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  box-shadow: var(--shadow-md);
-  text-transform: uppercase;
-}
-
-.reset-button:hover {
-  background: var(--Iron);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Responsive victory modal */
 @media (max-width: 768px) {
+  .player-panel {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    min-height: 120px;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+
+  .player-title {
+    flex: 0 0 auto;
+    max-width: 120px;
+    font-size: 1.2rem;
+    min-width: 80px;
+  }
+
+  .player-title img {
+    width: 100%;
+    height: auto;
+    max-height: 40px;
+    object-fit: contain;
+  }
+
+  .character-illustration {
+    display: none;
+  }
+
+  .player-info-display {
+    flex: 0 0 auto;
+    text-align: center;
+    min-width: 60px;
+  }
+
+  .player-dice {
+    flex: 0 0 auto;
+    margin-top: 0;
+    margin-left: 0;
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .dice-face {
+    width: 50px;
+    height: 50px;
+    font-size: 12px;
+  }
+
+  .dice-face.front  { transform: rotateY(0deg) translateZ(25px); }
+  .dice-face.back   { transform: rotateY(180deg) translateZ(25px); }
+  .dice-face.right  { transform: rotateY(90deg) translateZ(25px); }
+  .dice-face.left   { transform: rotateY(-90deg) translateZ(25px); }
+  .dice-face.top    { transform: rotateX(90deg) translateZ(25px); }
+  .dice-face.bottom { transform: rotateX(-90deg) translateZ(25px); }
+
+  .player-panel.active .player-dice {
+    transform: translateY(-10px);
+  }
+
+  .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
+    transform: translateY(-12px) scale(1.05) rotateX(-5deg) rotateY(5deg);
+  }
+
+  .game-container {
+    padding: var(--space-md);
+    gap: var(--space-md);
+  }
+
+  .game-board {
+    max-width: 100%;
+  }
+
+  :root {
+    --square-size: 35px;
+    --player-size: 16px;
+    --dice-size: 50px;
+  }
+
+  .pregame-title {
+    font-size: 2.5rem;
+  }
+
+  .pregame-card {
+    padding: var(--space-xl);
+  }
+
   .victory-content {
     flex-direction: column;
     text-align: center;
@@ -799,379 +1311,81 @@ body {
   .glory-title {
     min-width: 300px;
   }
-  
+
   .isolde-modal .victory-text,
   .rowan-modal .victory-text {
     text-align: center;
     order: 2;
   }
-  
+
   .isolde-modal .victory-character,
   .rowan-modal .victory-character {
     position: relative;
     left: auto;
     right: auto;
-    /* top: auto; */
     order: 1;
     min-height: auto;
-    bottom: -5.9vh; 
+    bottom: -5.9vh;
   }
-  
-  .victory-text {
-    text-align: center;
-  }
-  
-  .victory-title {
-    font-size: 2rem;
-  }
-  
+
   .victory-subtitle {
     font-size: 1rem;
     letter-spacing: 0.05em;
     margin-top: .5rem;
   }
+
+  .game-toolbar {
+    gap: var(--space-md);
+  }
+
+  .turn-indicator {
+    font-size: 0.85rem;
+  }
 }
+
+/* ===== RESPONSIVE: 480px ===== */
 
 @media (max-width: 480px) {
-  .victory-modal {
-    width: 95%;
-    margin: var(--space-md);
-  }
-  
-  .victory-content {
-    padding: var(--space-lg);
-  }
-  
-  .victory-title {
-    font-size: 1.75rem;
-  }
-}
-
-/* Player Status - Hidden in new layout */
-.player-status {
-  display: none;
-}
-
-/* Game Legend */
-.game-legend {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-xl);
-  background: rgba(255, 255, 255, 0.9);
-  padding: var(--space-md);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
-  grid-column: 1 / -1;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-medium);
-  color: var(--Black);
-}
-
-.chute-symbol,
-.ladder-symbol {
-  font-size: 1.25rem;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .game-main {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: var(--space-lg);
-  }
-  
   .player-panel {
     min-height: auto;
-    /* Mobile-specific horizontal layout for character panels */
-    flex-direction: row; /* Force horizontal layout */
-    align-items: center; /* Center items vertically within the horizontal panel */
-    justify-content: space-between;
-    padding: var(--space-md) var(--space-lg); /* Reduce vertical padding, maintain horizontal */
-    min-height: 120px; /* Set minimum height for consistent panel size */
-    gap: var(--space-md); /* Add gap between flex items */
-    flex-wrap: wrap; /* Allow wrapping on very narrow screens */
-    overflow: hidden; /* Ensure content stays within container */
-  }
-  
-  /* Player title section - compact for tablet/desktop */
-  .player-title {
-    flex: 0 0 auto; /* Don't grow or shrink, use natural size */
-    max-width: 150px; /* Slightly larger than mobile */
-    font-size: 1.3rem; /* Slightly larger font for larger screens */
-    min-width: 100px; /* Ensure minimum space for title */
-  }
-  
-  .player-title img {
-    width: 100%;
-    height: auto;
-    max-height: 50px; /* Slightly larger than mobile */
-    object-fit: contain;
-  }
-  
-  /* Character illustration - hide on screens up to 1200px */
-  .character-illustration {
-    display: none; /* Hide character illustrations */
-  }
-  
-  /* Player info display - compact layout */
-  .player-info-display {
-    flex: 0 0 auto; /* Don't grow or shrink */
-    text-align: center;
-    min-width: 80px; /* Ensure minimum space for info */
-  }
-  
-  /* Dice positioning for horizontal layout */
-  .player-dice {
-    flex: 0 0 auto; /* Don't grow or shrink */
-    margin-top: 0; /* Remove top margin */
-    margin-left: 0; /* Remove left margin to prevent overflow */
-    width: 60px; /* Standard size for larger screens */
-    height: 60px;
-    flex-shrink: 0; /* Prevent dice from shrinking */
-    position: relative; /* Ensure proper positioning */
-    margin-top: 5%;
-    margin-right: 2%;
-  }
-  
-  /* Dice faces for standard size */
-  .dice-face {
-    width: 60px;
-    height: 60px;
-    font-size: 14px; /* Standard font for larger screens */
-  }
-  
-  /* Update 3D dice positioning for standard size */
-  .dice-face.front {
-    transform: rotateY(0deg) translateZ(30px);
-  }
-  
-  /* TODO fix when I can figure out why back is flashing */
-  /* .dice-face.back {
-    transform: rotateY(180deg) translateZ(30px);
-  } */
-  
-  .dice-face.right {
-    transform: rotateY(90deg) translateZ(30px);
-  }
-  
-  .dice-face.left {
-    transform: rotateY(-90deg) translateZ(30px);
-  }
-  
-  .dice-face.top {
-    transform: rotateX(90deg) translateZ(30px);
-  }
-  
-  .dice-face.bottom {
-    transform: rotateX(-90deg) translateZ(30px);
-  }
-  
-  /* Adjust active player dice positioning */
-  .player-panel.active .player-dice {
-    transform: translateY(-20px); /* Moderate lift for larger screens */
-  }
-  
-  .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
-    transform: translateY(-22px) scale(1.05) rotateX(-5deg) rotateY(5deg);
-  }
-  
-  /* Ensure proper spacing in horizontal layout */
-  .game-container {
-    padding: var(--space-lg);
-    gap: var(--space-lg);
-  }
-  
-  .game-title {
-    font-size: 3rem; /* Larger title for bigger screens */
-  }
-  
-  .game-board {
-    max-width: 100%;
-  }
-  
-  .game-legend {
-    flex-direction: row; /* Keep horizontal on larger screens */
-    gap: var(--space-md);
-    text-align: center;
-  }
-}
-
-@media (max-width: 768px) {
-  /* Mobile-specific horizontal layout for character panels */
-  .player-panel {
-    flex-direction: row; /* Force horizontal layout on mobile */
-    align-items: center; /* Center items vertically within the horizontal panel */
-    justify-content: space-between; /* Distribute space evenly */
-    padding: var(--space-md) var(--space-lg); /* Reduce vertical padding, maintain horizontal */
-    min-height: 120px; /* Set minimum height for consistent panel size */
-    gap: var(--space-md); /* Add gap between flex items */
-    flex-wrap: wrap; /* Allow wrapping on very narrow screens */
-    overflow: hidden; /* Ensure content stays within container */
-  }
-  
-  /* Player title section - compact for mobile */
-  .player-title {
-    flex: 0 0 auto; /* Don't grow or shrink, use natural size */
-    max-width: 120px; /* Limit width to prevent title from taking too much space */
-    font-size: 1.2rem; /* Slightly smaller font for mobile */
-    min-width: 80px; /* Ensure minimum space for title */
-  }
-  
-  .player-title img {
-    width: 100%;
-    height: auto;
-    max-height: 40px; /* Limit height of title image */
-    object-fit: contain;
-  }
-  
-  /* Character illustration - optimized for horizontal display */
-  .character-illustration {
-    display: none; /* Hide character illustrations on mobile */
-  }
-  
-  .character-illustration img {
-    width: auto; /* Let width adjust naturally */
-    height: 100%; /* Fill the container height */
-    max-width: 100%; /* Don't exceed container width */
-    object-fit: contain; /* Maintain aspect ratio */
-  }
-  
-  /* Player info display - compact layout */
-  .player-info-display {
-    flex: 0 0 auto; /* Don't grow or shrink */
-    text-align: center;
-    min-width: 60px; /* Ensure minimum space for info */
-  }
-  
-  /* Dice positioning for horizontal layout */
-  .player-dice {
-    flex: 0 0 auto; /* Don't grow or shrink */
-    margin-top: 0; /* Remove top margin */
-    margin-left: 0; /* Remove left margin to prevent overflow */
-    width: 50px; /* Slightly smaller dice for mobile */
-    height: 50px;
-    flex-shrink: 0; /* Prevent dice from shrinking */
-    position: relative; /* Ensure proper positioning */
-  }
-  
-  /* Adjust dice faces for smaller size */
-  .dice-face {
-    width: 50px;
-    height: 50px;
-    font-size: 12px; /* Smaller font for mobile dice */
-  }
-  
-  /* Update 3D dice positioning for smaller size */
-  .dice-face.front {
-    transform: rotateY(0deg) translateZ(25px);
-  }
-  
-  .dice-face.back {
-    transform: rotateY(180deg) translateZ(25px);
-  }
-  
-  .dice-face.right {
-    transform: rotateY(90deg) translateZ(25px);
-  }
-  
-  .dice-face.left {
-    transform: rotateY(-90deg) translateZ(25px);
-  }
-  
-  .dice-face.top {
-    transform: rotateX(90deg) translateZ(25px);
-  }
-  
-  .dice-face.bottom {
-    transform: rotateX(-90deg) translateZ(25px);
-  }
-  
-  /* Adjust active player dice positioning for mobile */
-  .player-panel.active .player-dice {
-    transform: translateY(-10px); /* Small lift for mobile */
-  }
-  
-  .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
-    transform: translateY(-12px) scale(1.05) rotateX(-5deg) rotateY(5deg);
-  }
-  
-  /* Ensure proper spacing in horizontal layout */
-  .game-container {
-    padding: var(--space-md);
-    gap: var(--space-md);
-  }
-  
-  .game-title {
-    font-size: 2.5rem;
-  }
-  
-  .game-board {
-    max-width: 100%;
-  }
-  
-  .game-legend {
+    padding: var(--space-sm);
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: var(--space-sm);
     text-align: center;
   }
-  
-  :root {
-    --square-size: 35px;
-    --player-size: 16px;
-    --dice-size: 50px; /* Smaller dice for mobile */
-  }
-}
 
-@media (max-width: 480px) {
-  /* Extra small mobile devices - further optimize horizontal layout */
-  .player-panel {
-    min-height: auto; /* Allow natural height */
-    padding: var(--space-sm); /* Uniform padding */
-    flex-direction: column; /* Stack vertically on very narrow screens */
-    align-items: center; /* Center all items */
-    justify-content: center; /* Center content */
-    gap: var(--space-sm); /* Smaller gap for stacked layout */
-    text-align: center; /* Center text */
-  }
-  
   .player-title {
-    max-width: none; /* Remove width restriction */
-    width: 100%; /* Full width for stacked layout */
-    font-size: 1rem; /* Smaller font for very small screens */
-    order: 1; /* Title first */
+    max-width: none;
+    width: 100%;
+    font-size: 1rem;
+    order: 1;
     margin-bottom: 3%;
-    
   }
-  
+
   .player-title img {
-    max-height: 35px; /* Smaller title image */
+    max-height: 35px;
   }
-  
+
   .player-info-display {
-    order: 2; /* Info second */
-    min-width: auto; /* Remove minimum width */
+    order: 2;
+    min-width: auto;
   }
-  
+
   .player-dice {
-    width: 45px; /* Even smaller dice for very small screens */
+    width: 45px;
     height: 45px;
-    order: 3; /* Dice last */
-    margin-left: 0; /* No margin needed in stacked layout */
+    order: 3;
+    margin-left: 0;
   }
-  
+
   .dice-face {
     width: 45px;
     height: 45px;
     font-size: 10px;
   }
-  
-  /* Update 3D positioning for smallest dice */
+
   .dice-face.front,
   .dice-face.back,
   .dice-face.right,
@@ -1180,57 +1394,73 @@ body {
   .dice-face.bottom {
     transform: rotateY(0deg) translateZ(22.5px);
   }
-  
-  .dice-face.back {
-    transform: rotateY(180deg) translateZ(22.5px);
-  }
-  
-  .dice-face.right {
-    transform: rotateY(90deg) translateZ(22.5px);
-  }
-  
-  .dice-face.left {
-    transform: rotateY(-90deg) translateZ(22.5px);
-  }
-  
-  .dice-face.top {
-    transform: rotateX(90deg) translateZ(22.5px);
-  }
-  
-  .dice-face.bottom {
-    transform: rotateX(-90deg) translateZ(22.5px);
-  }
-  
-  /* Adjust active dice positioning for stacked layout */
+
+  .dice-face.back   { transform: rotateY(180deg) translateZ(22.5px); }
+  .dice-face.right  { transform: rotateY(90deg) translateZ(22.5px); }
+  .dice-face.left   { transform: rotateY(-90deg) translateZ(22.5px); }
+  .dice-face.top    { transform: rotateX(90deg) translateZ(22.5px); }
+  .dice-face.bottom { transform: rotateX(-90deg) translateZ(22.5px); }
+
   .player-panel.active .player-dice {
-    transform: translateY(0); /* No lift for stacked layout */
+    transform: translateY(0);
   }
-  
+
   .player-panel.active .player-dice:hover:not(:disabled):not(.rolling):not(.settling) {
     transform: translateY(-2px) scale(1.05) rotateX(-5deg) rotateY(5deg);
   }
-  
-  .game-title {
-    font-size: 2rem;
-  }
-  
+
   :root {
     --square-size: 30px;
     --player-size: 14px;
-    --dice-size: 45px; /* Smallest dice size */
+    --dice-size: 45px;
   }
-  
+
   .square-number {
     font-size: 0.8rem;
   }
-  
-  .chute-indicator,
-  .ladder-indicator {
-    font-size: 0.6rem;
+
+  .pregame-title {
+    font-size: 2rem;
+  }
+
+  .pregame-card {
+    padding: var(--space-lg);
+  }
+
+  .pregame-player-input {
+    padding: var(--space-sm);
+  }
+
+  .pregame-token {
+    width: 36px;
+    height: 36px;
+  }
+
+  .victory-modal {
+    width: 95%;
+    margin: var(--space-md);
+  }
+
+  .victory-content {
+    padding: var(--space-lg);
+  }
+
+  .floating-indicator {
+    font-size: 1rem;
+  }
+
+  .move-log-entries {
+    max-height: 60px;
+  }
+
+  .game-toolbar {
+    gap: var(--space-sm);
+    flex-wrap: wrap;
   }
 }
 
-/* Accessibility Improvements */
+/* ===== ACCESSIBILITY ===== */
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -1239,31 +1469,15 @@ body {
   }
 }
 
-/* Focus Styles */
 .player-dice:focus-visible,
-.reset-button:focus-visible {
+.play-again-button:focus-visible,
+.toolbar-btn:focus-visible,
+.pregame-start-btn:focus-visible,
+.pregame-link:focus-visible {
   outline: 2px solid white;
   outline-offset: 2px;
 }
 
-/* Custom Styling Placeholder Classes */
-.custom-board-theme {
-  /* Placeholder for custom board themes */
-}
-
-.custom-piece-theme {
-  /* Placeholder for custom piece themes */
-}
-
-.custom-dice-theme {
-  /* Placeholder for custom dice themes */
-}
-
-.custom-square-theme {
-  /* Placeholder for custom square themes */
-}
-
-/* High Contrast Mode Support */
 @media (prefers-contrast: high) {
   :root {
     --Pink: #FF00FF;
