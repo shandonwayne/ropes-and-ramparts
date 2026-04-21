@@ -587,22 +587,20 @@ const ChutesLaddersGame: React.FC = () => {
           >
             {render3DDice(player1LastRoll, currentPlayerIndex === 0)}
           </div>
+          <MoveLog entries={moveLog} playerId={1} />
         </div>
 
         {/* Game Board */}
-        <div className="board-and-log">
-          <div className="game-board" ref={boardRef} style={{ position: 'relative' }}>
-            {renderBoard()}
-            {ropePositions.map((rope) => (
-              <div
-                key={`rope-${rope.start}-${rope.end}`}
-                className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
-                style={rope.style}
-              />
-            ))}
-            <FloatingIndicators indicators={indicators} />
-          </div>
-          <MoveLog entries={moveLog} />
+        <div className="game-board" ref={boardRef} style={{ position: 'relative' }}>
+          {renderBoard()}
+          {ropePositions.map((rope) => (
+            <div
+              key={`rope-${rope.start}-${rope.end}`}
+              className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
+              style={rope.style}
+            />
+          ))}
+          <FloatingIndicators indicators={indicators} />
         </div>
 
         {/* Player 2 Panel */}
@@ -633,6 +631,7 @@ const ChutesLaddersGame: React.FC = () => {
           >
             {render3DDice(player2LastRoll, currentPlayerIndex === 1)}
           </div>
+          <MoveLog entries={moveLog} playerId={2} />
         </div>
       </div>
     </div>
