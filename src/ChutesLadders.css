@@ -877,7 +877,7 @@ kbd {
 }
 
 .move-log-entries {
-  max-height: 100px;
+  max-height: calc(3 * 21px + var(--space-xs) * 2);
   overflow-y: auto;
   padding: var(--space-xs);
   scrollbar-width: thin;
@@ -1189,10 +1189,6 @@ kbd {
     margin-top: var(--space-xs);
   }
 
-  .move-log-entries {
-    max-height: 60px;
-  }
-
   .pregame-characters {
     display: none;
   }
@@ -1435,10 +1431,6 @@ kbd {
 
   .floating-indicator {
     font-size: 1rem;
-  }
-
-  .move-log-entries {
-    max-height: 50px;
   }
 
   .game-toolbar {
