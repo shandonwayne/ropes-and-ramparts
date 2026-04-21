@@ -147,20 +147,7 @@ const ChutesLaddersGame: React.FC = () => {
     return { left: startCenterX, top: startCenterY, width: length, angle };
   };
 
-  // Highlight reachable squares on hover
-  useEffect(() => {
-    if (phase !== 'playing' || isRolling || isMoving) {
-      setHighlightedSquares([]);
-      return;
-    }
-    const pos = players[currentPlayerIndex].position;
-    const reachable: number[] = [];
-    for (let i = 1; i <= 6; i++) {
-      const target = pos + i;
-      if (target <= GAME_CONFIG.boardSize) reachable.push(target);
-    }
-    setHighlightedSquares(reachable);
-  }, [currentPlayerIndex, players, phase, isRolling, isMoving]);
+  // Highlights are set explicitly in movePlayer after the roll, not via effect
 
   // Keyboard controls
   useEffect(() => {
@@ -259,7 +246,6 @@ const ChutesLaddersGame: React.FC = () => {
 
   const movePlayer = async (steps: number) => {
     setIsMoving(true);
-    setHighlightedSquares([]);
 
     const idx = currentPlayerIndexRef.current;
     const currentPlayer = playersRef.current[idx];
@@ -267,6 +253,13 @@ const ChutesLaddersGame: React.FC = () => {
     let newPosition = Math.min(startPos + steps, GAME_CONFIG.boardSize);
     const newTurn = turnCountRef.current + 1;
     setTurnCount(newTurn);
+
+    // Show highlighted path for the exact number of squares rolled
+    const path: number[] = [];
+    for (let i = 1; i <= steps && startPos + i <= GAME_CONFIG.boardSize; i++) {
+      path.push(startPos + i);
+    }
+    setHighlightedSquares(path);
 
     setPlayerStats((prev) => {
       const updated = [...prev] as [PlayerStats, PlayerStats];
@@ -281,6 +274,8 @@ const ChutesLaddersGame: React.FC = () => {
       setPlayers((prev) =>
         prev.map((p) => (p.id === currentPlayer.id ? { ...p, position: pos } : p))
       );
+      // Remove the square the piece just landed on from highlights
+      setHighlightedSquares((prev) => prev.filter((sq) => sq !== pos));
     }
 
     let event: MoveLogEntry['event'] = 'move';
@@ -443,7 +438,7 @@ const ChutesLaddersGame: React.FC = () => {
         squares.push(
           <div
             key={`${row}-${col}`}
-            className={`game-square ${hasChute ? 'chute-start' : ''} ${hasLadder ? 'ladder-start' : ''} ${isHighlighted ? 'highlighted-square' : ''}`}
+            className={`game-square ${hasChute ? 'chute-start' : ''} ${hasLadder ? 'ladder-start' : ''} ${isHighlighted ? `highlighted-square highlight-player-${currentPlayerIndex + 1}` : ''}`}
             data-position={gamePosition}
           >
             <span className="square-number">{gamePosition}</span>

@@ -750,11 +750,20 @@ kbd {
   color: var(--Pebble);
 }
 
-/* Highlighted squares (reachable) */
+/* Highlighted squares (path after roll) */
 .game-square.highlighted-square {
-  outline: 2px solid rgba(255, 188, 46, 0.45);
   outline-offset: -2px;
   z-index: 10;
+}
+
+.game-square.highlight-player-1 {
+  outline: 2px solid rgba(245, 123, 53, 0.6);
+  background: rgba(245, 123, 53, 0.15) !important;
+}
+
+.game-square.highlight-player-2 {
+  outline: 2px solid rgba(224, 143, 181, 0.6);
+  background: rgba(224, 143, 181, 0.15) !important;
 }
 
 .square-number {
