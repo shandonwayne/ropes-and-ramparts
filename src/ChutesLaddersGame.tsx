@@ -44,6 +44,15 @@ const ChutesLaddersGame: React.FC = () => {
   ]);
 
   const boardRef = useRef<HTMLDivElement>(null);
+  const playersRef = useRef(players);
+  playersRef.current = players;
+  const currentPlayerIndexRef = useRef(currentPlayerIndex);
+  currentPlayerIndexRef.current = currentPlayerIndex;
+  const turnCountRef = useRef(turnCount);
+  turnCountRef.current = turnCount;
+  const playerStatsRef = useRef(playerStats);
+  playerStatsRef.current = playerStats;
+
   const { leaderboard, loading: leaderboardLoading, saveGameResult, fetchLeaderboard } = useGameStats();
   const { indicators, addIndicator } = useFloatingIndicators();
 
@@ -227,8 +236,9 @@ const ChutesLaddersGame: React.FC = () => {
   const rollDice = async () => {
     if (isRolling || isSettling || isMoving || phase !== 'playing') return;
 
-    if (currentPlayerIndex === 0 && player1State === 'failure') setPlayer1State('default');
-    if (currentPlayerIndex === 1 && player2State === 'failure') setPlayer2State('default');
+    const idx = currentPlayerIndexRef.current;
+    if (idx === 0 && player1State === 'failure') setPlayer1State('default');
+    if (idx === 1 && player2State === 'failure') setPlayer2State('default');
 
     setIsRolling(true);
     setIsSettling(false);
@@ -240,7 +250,7 @@ const ChutesLaddersGame: React.FC = () => {
       await new Promise((resolve) => setTimeout(resolve, interval));
     }
 
-    if (currentPlayerIndex === 0) setPlayer1LastRoll(finalValue);
+    if (idx === 0) setPlayer1LastRoll(finalValue);
     else setPlayer2LastRoll(finalValue);
     setIsRolling(false);
 
@@ -251,26 +261,25 @@ const ChutesLaddersGame: React.FC = () => {
     setIsMoving(true);
     setHighlightedSquares([]);
 
-    const currentPlayer = players[currentPlayerIndex];
-    const fromPosition = currentPlayer.position;
-    let newPosition = Math.min(currentPlayer.position + steps, GAME_CONFIG.boardSize);
-    const newTurn = turnCount + 1;
+    const idx = currentPlayerIndexRef.current;
+    const currentPlayer = playersRef.current[idx];
+    const startPos = currentPlayer.position;
+    let newPosition = Math.min(startPos + steps, GAME_CONFIG.boardSize);
+    const newTurn = turnCountRef.current + 1;
     setTurnCount(newTurn);
 
-    // Update stats for current player
     setPlayerStats((prev) => {
       const updated = [...prev] as [PlayerStats, PlayerStats];
-      updated[currentPlayerIndex] = { ...updated[currentPlayerIndex], turns: updated[currentPlayerIndex].turns + 1 };
+      updated[idx] = { ...updated[idx], turns: updated[idx].turns + 1 };
       return updated;
     });
 
-    for (let step = 1; step <= steps && currentPlayer.position + step <= GAME_CONFIG.boardSize; step++) {
+    for (let step = 1; step <= steps && startPos + step <= GAME_CONFIG.boardSize; step++) {
       await new Promise((resolve) => setTimeout(resolve, 300));
       playSound('step');
-      setPlayers((prevPlayers) =>
-        prevPlayers.map((player) =>
-          player.id === currentPlayer.id ? { ...player, position: currentPlayer.position + step } : player
-        )
+      const pos = startPos + step;
+      setPlayers((prev) =>
+        prev.map((p) => (p.id === currentPlayer.id ? { ...p, position: pos } : p))
       );
     }
 
@@ -291,7 +300,6 @@ const ChutesLaddersGame: React.FC = () => {
       event = 'chute';
       newPosition = eventTo;
 
-      // Show floating indicator
       if (boardRef.current) {
         const sq = boardRef.current.querySelector(`[data-position="${eventFrom}"]`);
         if (sq) {
@@ -303,8 +311,8 @@ const ChutesLaddersGame: React.FC = () => {
 
       setPlayerStats((prev) => {
         const updated = [...prev] as [PlayerStats, PlayerStats];
-        const s = updated[currentPlayerIndex];
-        updated[currentPlayerIndex] = {
+        const s = updated[idx];
+        updated[idx] = {
           ...s,
           chutesHit: s.chutesHit + 1,
           biggestChute: Math.max(s.biggestChute, drop),
@@ -312,8 +320,8 @@ const ChutesLaddersGame: React.FC = () => {
         return updated;
       });
 
-      setPlayers((prevPlayers) =>
-        prevPlayers.map((player) => (player.id === currentPlayer.id ? { ...player, position: newPosition } : player))
+      setPlayers((prev) =>
+        prev.map((p) => (p.id === currentPlayer.id ? { ...p, position: newPosition } : p))
       );
     } else if (GAME_CONFIG.ladders[newPosition]) {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -336,8 +344,8 @@ const ChutesLaddersGame: React.FC = () => {
 
       setPlayerStats((prev) => {
         const updated = [...prev] as [PlayerStats, PlayerStats];
-        const s = updated[currentPlayerIndex];
-        updated[currentPlayerIndex] = {
+        const s = updated[idx];
+        updated[idx] = {
           ...s,
           laddersClimbed: s.laddersClimbed + 1,
           biggestLadder: Math.max(s.biggestLadder, climb),
@@ -345,8 +353,8 @@ const ChutesLaddersGame: React.FC = () => {
         return updated;
       });
 
-      setPlayers((prevPlayers) =>
-        prevPlayers.map((player) => (player.id === currentPlayer.id ? { ...player, position: newPosition } : player))
+      setPlayers((prev) =>
+        prev.map((p) => (p.id === currentPlayer.id ? { ...p, position: newPosition } : p))
       );
     }
 
@@ -356,15 +364,16 @@ const ChutesLaddersGame: React.FC = () => {
       setPhase('gameover');
       playSound('victory');
 
-      // Save to database
-      const finalStats = [...playerStats] as [PlayerStats, PlayerStats];
-      finalStats[currentPlayerIndex] = {
-        ...finalStats[currentPlayerIndex],
-        turns: finalStats[currentPlayerIndex].turns + 1,
-      };
-      saveGameResult(players[0].name, players[1].name, currentPlayer.name, finalStats[0], finalStats[1]);
+      const stats = playerStatsRef.current;
+      saveGameResult(
+        playersRef.current[0].name,
+        playersRef.current[1].name,
+        currentPlayer.name,
+        stats[0],
+        stats[1]
+      );
     } else {
-      setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
+      setCurrentPlayerIndex((idx + 1) % 2);
     }
 
     setMoveLog((prev) => [
@@ -374,7 +383,7 @@ const ChutesLaddersGame: React.FC = () => {
         playerId: currentPlayer.id,
         playerName: currentPlayer.name,
         roll: steps,
-        fromPosition,
+        fromPosition: startPos,
         toPosition: newPosition,
         event,
         eventFrom,
