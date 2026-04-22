@@ -74,12 +74,14 @@ const ChutesLaddersGame: React.FC = () => {
             style: {
               position: 'absolute',
               left: `${ropePos.left}px`,
-              top: `${ropePos.top - 10}px`,
+              top: `${ropePos.top}px`,
               width: `${ropePos.width}px`,
-              height: '20px',
+              height: '8px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               pointerEvents: 'none',
+              background: 'linear-gradient(90deg,rgba(68, 69, 70, 1) 0%, rgba(100, 92, 94, 1) 75%, rgba(68, 69, 70, 1) 100%)',
+              borderRadius: '4px',
               zIndex: 50,
             },
           });
@@ -96,12 +98,14 @@ const ChutesLaddersGame: React.FC = () => {
             style: {
               position: 'absolute',
               left: `${ropePos.left}px`,
-              top: `${ropePos.top - 10}px`,
+              top: `${ropePos.top}px`,
               width: `${ropePos.width}px`,
-              height: '20px',
+              height: '8px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               pointerEvents: 'none',
+              background: 'linear-gradient(90deg, #F57B35, #FFBC2E)',
+              borderRadius: '4px',
               zIndex: 50,
             },
           });
@@ -590,13 +594,10 @@ const ChutesLaddersGame: React.FC = () => {
         <div className="game-board" ref={boardRef} style={{ position: 'relative' }}>
           {renderBoard()}
           {ropePositions.map((rope) => (
-            <img
+            <div
               key={`rope-${rope.start}-${rope.end}`}
-              src="/rope.svg"
-              alt=""
-              aria-hidden="true"
               className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
-              style={{ ...rope.style, objectFit: 'fill', display: 'block' }}
+              style={rope.style}
             />
           ))}
           <FloatingIndicators indicators={indicators} />
