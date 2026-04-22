@@ -572,40 +572,19 @@ const ChutesLaddersGame: React.FC = () => {
           {renderBoard()}
           {ropePositions.map((rope) => {
             const w = parseFloat(rope.style.width as string);
-            const h = 18;
-            const period = 22;
-            const amp = 3.5;
+            const h = 10;
             const cy = h / 2;
-            const buildStrand = (phaseOffset: number) => {
-              let d = `M 0 ${cy}`;
-              for (let x = 0; x <= w; x += 2) {
-                const y = cy + amp * Math.sin(((x + phaseOffset) / period) * 2 * Math.PI);
-                d += ` L ${x} ${y}`;
-              }
-              return d;
-            };
-            const strand1 = buildStrand(0);
-            const strand2 = buildStrand(period / 2);
-            const strand3 = buildStrand(period / 4);
             return (
               <svg
                 key={`rope-${rope.start}-${rope.end}`}
-                style={{ ...rope.style, overflow: 'visible', display: 'block' }}
+                style={{ ...rope.style, height: `${h}px`, overflow: 'visible', display: 'block' }}
                 width={w}
                 height={h}
                 viewBox={`0 0 ${w} ${h}`}
               >
-                <defs>
-                  <filter id={`shadow-ladder-${rope.start}`} x="-5%" y="-40%" width="110%" height="180%">
-                    <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="rgba(0,0,0,0.4)" />
-                  </filter>
-                </defs>
-                <path d={strand3} stroke="rgba(140,80,10,0.5)" strokeWidth="5" fill="none" strokeLinecap="round" />
-                <path d={strand1} stroke="#D4851A" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
-                <path d={strand2} stroke="#F5A030" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
-                <path d={strand3} stroke="rgba(255,210,120,0.5)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                <circle cx="3" cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
-                <circle cx={w - 3} cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="rgba(0,0,0,0.35)" strokeWidth="5" strokeLinecap="round" />
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#E8A030" strokeWidth="3.5" strokeLinecap="round" />
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="rgba(255,225,140,0.45)" strokeWidth="1.2" strokeLinecap="round" />
               </svg>
             );
           })}
