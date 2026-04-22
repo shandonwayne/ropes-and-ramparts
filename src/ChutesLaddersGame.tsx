@@ -34,6 +34,7 @@ const ChutesLaddersGame: React.FC = () => {
   const [ropePositions, setRopePositions] = useState<Array<{ start: number; end: number; style: React.CSSProperties }>>([]);
   const [player1State, setPlayer1State] = useState<'default' | 'failure'>('default');
   const [player2State, setPlayer2State] = useState<'default' | 'failure'>('default');
+  const [fallingPlayer, setFallingPlayer] = useState<{ playerId: number; square: number } | null>(null);
   const [moveLog, setMoveLog] = useState<MoveLogEntry[]>([]);
   const [turnCount, setTurnCount] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -268,6 +269,10 @@ const ChutesLaddersGame: React.FC = () => {
       if (currentPlayer.id === 1) setPlayer1State('failure');
       if (currentPlayer.id === 2) setPlayer2State('failure');
 
+      setFallingPlayer({ playerId: currentPlayer.id, square: eventFrom });
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      setFallingPlayer(null);
+
       playSound('chute');
       event = 'chute';
       newPosition = eventTo;
@@ -382,6 +387,7 @@ const ChutesLaddersGame: React.FC = () => {
     setPlayer2LastRoll(1);
     setPlayer1State('default');
     setPlayer2State('default');
+    setFallingPlayer(null);
     setWinner(null);
     setIsRolling(false);
     setIsSettling(false);
@@ -422,28 +428,31 @@ const ChutesLaddersGame: React.FC = () => {
             {hasChute && <div className="hole-overlay" />}
             {hasLadder && <span className="square-badge ladder-badge">&#x25B2;</span>}
             <div className="players-container">
-              {playersHere.map((player) => (
-                <div
-                  key={player.id}
-                  className={`player-piece player-${player.id}`}
-                  style={{
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 200,
-                  }}
-                >
-                  <img
-                    src={player.id === 1 ? '/RowanPlayerToken.svg' : '/IsolderPlayerToken.svg'}
-                    alt={player.id === 1 ? 'Sir Rowan Token' : 'Lady Isolde Token'}
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                  />
-                </div>
-              ))}
+              {playersHere.map((player) => {
+                const isFalling = fallingPlayer?.playerId === player.id && fallingPlayer?.square === gamePosition;
+                return (
+                  <div
+                    key={player.id}
+                    className={`player-piece player-${player.id}${isFalling ? ' token-falling' : ''}`}
+                    style={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: isFalling ? 4 : 200,
+                    }}
+                  >
+                    <img
+                      src={player.id === 1 ? '/RowanPlayerToken.svg' : '/IsolderPlayerToken.svg'}
+                      alt={player.id === 1 ? 'Sir Rowan Token' : 'Lady Isolde Token'}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         );

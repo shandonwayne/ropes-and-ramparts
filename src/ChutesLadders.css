@@ -785,29 +785,43 @@ kbd {
 
 .hole-overlay {
   position: absolute;
-  inset: 15%;
+  left: 12%;
+  right: 12%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 38%;
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 35%, #2a1a0e 0%, #0d0806 55%, #000000 100%);
+  background: radial-gradient(ellipse at 40% 30%, #1e1208 0%, #0a0503 50%, #000000 100%);
   box-shadow:
-    inset 0 2px 6px rgba(0,0,0,0.95),
-    inset 0 0 12px rgba(0,0,0,0.8),
-    0 0 6px 2px rgba(0,0,0,0.5),
-    0 1px 3px rgba(180,120,60,0.25);
-  border: 1.5px solid rgba(90,60,30,0.6);
+    inset 0 3px 8px rgba(0,0,0,1),
+    inset 0 0 10px rgba(0,0,0,0.9),
+    0 2px 4px rgba(0,0,0,0.6),
+    0 0 0 1.5px rgba(70,45,20,0.55);
   z-index: 3;
   pointer-events: none;
 }
 
-.hole-overlay::after {
+.hole-overlay::before {
   content: '';
   position: absolute;
-  top: 12%;
-  left: 18%;
-  width: 28%;
-  height: 18%;
+  top: 18%;
+  left: 20%;
+  width: 30%;
+  height: 22%;
   border-radius: 50%;
-  background: rgba(255,200,120,0.07);
-  transform: rotate(-30deg);
+  background: rgba(255,200,120,0.06);
+}
+
+@keyframes token-fall-in {
+  0%   { transform: scale(1);    opacity: 1; }
+  40%  { transform: scale(0.7);  opacity: 0.9; }
+  75%  { transform: scale(0.3) scaleY(0.5); opacity: 0.5; }
+  100% { transform: scale(0.05) scaleY(0.2); opacity: 0; }
+}
+
+.token-falling {
+  animation: token-fall-in 0.55s ease-in forwards;
+  transform-origin: center center;
 }
 
 .ladder-badge {
