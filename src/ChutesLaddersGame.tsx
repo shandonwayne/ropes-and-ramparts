@@ -76,12 +76,10 @@ const ChutesLaddersGame: React.FC = () => {
               left: `${ropePos.left}px`,
               top: `${ropePos.top}px`,
               width: `${ropePos.width}px`,
-              height: '8px',
+              height: '18px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               pointerEvents: 'none',
-              background: 'linear-gradient(90deg,rgba(68, 69, 70, 1) 0%, rgba(100, 92, 94, 1) 75%, rgba(68, 69, 70, 1) 100%)',
-              borderRadius: '4px',
               zIndex: 50,
             },
           });
@@ -100,12 +98,10 @@ const ChutesLaddersGame: React.FC = () => {
               left: `${ropePos.left}px`,
               top: `${ropePos.top}px`,
               width: `${ropePos.width}px`,
-              height: '8px',
+              height: '18px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               pointerEvents: 'none',
-              background: 'linear-gradient(90deg, #F57B35, #FFBC2E)',
-              borderRadius: '4px',
               zIndex: 50,
             },
           });
@@ -593,13 +589,80 @@ const ChutesLaddersGame: React.FC = () => {
         {/* Game Board */}
         <div className="game-board" ref={boardRef} style={{ position: 'relative' }}>
           {renderBoard()}
-          {ropePositions.map((rope) => (
-            <div
-              key={`rope-${rope.start}-${rope.end}`}
-              className={`connection ${GAME_CONFIG.chutes[rope.start] ? 'chute-connection' : 'ladder-connection'}`}
-              style={rope.style}
-            />
-          ))}
+          {ropePositions.map((rope) => {
+            const isChute = !!GAME_CONFIG.chutes[rope.start];
+            const w = parseFloat(rope.style.width as string);
+            const h = 18;
+            const period = 22;
+            const amp = 3.5;
+            const cy = h / 2;
+            // Build sinusoidal path for two strands offset by half period
+            const buildStrand = (phaseOffset: number) => {
+              let d = `M 0 ${cy}`;
+              for (let x = 0; x <= w; x += 2) {
+                const y = cy + amp * Math.sin(((x + phaseOffset) / period) * 2 * Math.PI);
+                d += ` L ${x} ${y}`;
+              }
+              return d;
+            };
+            const strand1 = buildStrand(0);
+            const strand2 = buildStrand(period / 2);
+            const strand3 = buildStrand(period / 4);
+
+            if (isChute) {
+              return (
+                <svg
+                  key={`rope-${rope.start}-${rope.end}`}
+                  style={{ ...rope.style, overflow: 'visible', display: 'block' }}
+                  width={w}
+                  height={h}
+                  viewBox={`0 0 ${w} ${h}`}
+                >
+                  <defs>
+                    <filter id={`shadow-chute-${rope.start}`} x="-5%" y="-40%" width="110%" height="180%">
+                      <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="rgba(0,0,0,0.5)" />
+                    </filter>
+                  </defs>
+                  {/* Core strand */}
+                  <path d={strand3} stroke="rgba(55,45,38,0.6)" strokeWidth="5" fill="none" strokeLinecap="round" />
+                  {/* Two main twisted strands */}
+                  <path d={strand1} stroke="#6b5a4e" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-chute-${rope.start})`} />
+                  <path d={strand2} stroke="#8a7060" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-chute-${rope.start})`} />
+                  {/* Highlight strand */}
+                  <path d={strand3} stroke="rgba(160,130,110,0.45)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                  {/* End knot circles */}
+                  <circle cx="3" cy={cy} r="4" fill="#5a4a3f" stroke="#8a7060" strokeWidth="1" />
+                  <circle cx={w - 3} cy={cy} r="4" fill="#5a4a3f" stroke="#8a7060" strokeWidth="1" />
+                </svg>
+              );
+            } else {
+              return (
+                <svg
+                  key={`rope-${rope.start}-${rope.end}`}
+                  style={{ ...rope.style, overflow: 'visible', display: 'block' }}
+                  width={w}
+                  height={h}
+                  viewBox={`0 0 ${w} ${h}`}
+                >
+                  <defs>
+                    <filter id={`shadow-ladder-${rope.start}`} x="-5%" y="-40%" width="110%" height="180%">
+                      <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="rgba(0,0,0,0.4)" />
+                    </filter>
+                  </defs>
+                  {/* Core strand */}
+                  <path d={strand3} stroke="rgba(140,80,10,0.5)" strokeWidth="5" fill="none" strokeLinecap="round" />
+                  {/* Two main twisted strands */}
+                  <path d={strand1} stroke="#D4851A" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
+                  <path d={strand2} stroke="#F5A030" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
+                  {/* Highlight strand */}
+                  <path d={strand3} stroke="rgba(255,210,120,0.5)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                  {/* End knot circles */}
+                  <circle cx="3" cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
+                  <circle cx={w - 3} cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
+                </svg>
+              );
+            }
+          })}
           <FloatingIndicators indicators={indicators} />
         </div>
 
