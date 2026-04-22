@@ -787,9 +787,8 @@ kbd {
   position: absolute;
   left: 12%;
   right: 12%;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 38%;
+  bottom: 4%;
+  height: 33%;
   border-radius: 50%;
   background: radial-gradient(ellipse at 40% 30%, #1e1208 0%, #0a0503 50%, #000000 100%);
   box-shadow:

@@ -581,7 +581,7 @@ const ChutesLaddersGame: React.FC = () => {
           {renderBoard()}
           {ropePositions.map((rope) => {
             const w = parseFloat(rope.style.width as string);
-            const h = 14;
+            const h = 17;
             const cy = h / 2;
             return (
               <svg
@@ -592,15 +592,15 @@ const ChutesLaddersGame: React.FC = () => {
                 viewBox={`0 0 ${w} ${h}`}
               >
                 {/* Shadow */}
-                <line x1="0" y1={cy + 1} x2={w} y2={cy + 1} stroke="rgba(0,0,0,0.45)" strokeWidth="9" strokeLinecap="round" />
+                <line x1="0" y1={cy + 1} x2={w} y2={cy + 1} stroke="rgba(0,0,0,0.45)" strokeWidth="12" strokeLinecap="round" />
                 {/* Rope body */}
-                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#C07820" strokeWidth="7" strokeLinecap="round" />
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#A06828" strokeWidth="10" strokeLinecap="round" />
                 {/* Twist stripes — darker */}
-                <line x1="0" y1={cy} x2={w} y2={cy} stroke="rgba(80,40,5,0.35)" strokeWidth="7" strokeLinecap="round" strokeDasharray="6 6" />
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="rgba(50,25,5,0.38)" strokeWidth="10" strokeLinecap="round" strokeDasharray="6 6" />
                 {/* Mid tone fill between stripes */}
-                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#E09030" strokeWidth="7" strokeLinecap="round" strokeDasharray="6 6" strokeDashoffset="6" />
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#C48038" strokeWidth="10" strokeLinecap="round" strokeDasharray="6 6" strokeDashoffset="6" />
                 {/* Top highlight */}
-                <line x1="2" y1={cy - 1.5} x2={w - 2} y2={cy - 1.5} stroke="rgba(255,220,130,0.4)" strokeWidth="2" strokeLinecap="round" />
+                <line x1="2" y1={cy - 2} x2={w - 2} y2={cy - 2} stroke="rgba(200,165,100,0.35)" strokeWidth="2.5" strokeLinecap="round" />
               </svg>
             );
           })}
