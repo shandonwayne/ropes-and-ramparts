@@ -74,9 +74,9 @@ const ChutesLaddersGame: React.FC = () => {
             style: {
               position: 'absolute',
               left: `${ropePos.left}px`,
-              top: `${ropePos.top - 6}px`,
+              top: `${ropePos.top - 10}px`,
               width: `${ropePos.width}px`,
-              height: '12px',
+              height: '20px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               pointerEvents: 'none',
@@ -96,9 +96,9 @@ const ChutesLaddersGame: React.FC = () => {
             style: {
               position: 'absolute',
               left: `${ropePos.left}px`,
-              top: `${ropePos.top - 6}px`,
+              top: `${ropePos.top - 10}px`,
               width: `${ropePos.width}px`,
-              height: '12px',
+              height: '20px',
               transform: `rotate(${ropePos.angle}deg)`,
               transformOrigin: '0 50%',
               pointerEvents: 'none',
