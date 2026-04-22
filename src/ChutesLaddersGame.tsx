@@ -572,7 +572,7 @@ const ChutesLaddersGame: React.FC = () => {
           {renderBoard()}
           {ropePositions.map((rope) => {
             const w = parseFloat(rope.style.width as string);
-            const h = 10;
+            const h = 14;
             const cy = h / 2;
             return (
               <svg
@@ -582,9 +582,16 @@ const ChutesLaddersGame: React.FC = () => {
                 height={h}
                 viewBox={`0 0 ${w} ${h}`}
               >
-                <line x1="0" y1={cy} x2={w} y2={cy} stroke="rgba(0,0,0,0.35)" strokeWidth="5" strokeLinecap="round" />
-                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#E8A030" strokeWidth="3.5" strokeLinecap="round" />
-                <line x1="0" y1={cy} x2={w} y2={cy} stroke="rgba(255,225,140,0.45)" strokeWidth="1.2" strokeLinecap="round" />
+                {/* Shadow */}
+                <line x1="0" y1={cy + 1} x2={w} y2={cy + 1} stroke="rgba(0,0,0,0.45)" strokeWidth="9" strokeLinecap="round" />
+                {/* Rope body */}
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#C07820" strokeWidth="7" strokeLinecap="round" />
+                {/* Twist stripes — darker */}
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="rgba(80,40,5,0.35)" strokeWidth="7" strokeLinecap="round" strokeDasharray="6 6" />
+                {/* Mid tone fill between stripes */}
+                <line x1="0" y1={cy} x2={w} y2={cy} stroke="#E09030" strokeWidth="7" strokeLinecap="round" strokeDasharray="6 6" strokeDashoffset="6" />
+                {/* Top highlight */}
+                <line x1="2" y1={cy - 1.5} x2={w - 2} y2={cy - 1.5} stroke="rgba(255,220,130,0.4)" strokeWidth="2" strokeLinecap="round" />
               </svg>
             );
           })}
