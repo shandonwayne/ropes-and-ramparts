@@ -442,11 +442,15 @@ const ChutesLaddersGame: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      zIndex: isFalling ? 4 : 200,
+                      zIndex: isFalling ? 10 : 200,
                     }}
                   >
                     <img
-                      src={player.id === 1 ? '/RowanPlayerToken.svg' : '/IsolderPlayerToken.svg'}
+                      src={
+                        isFalling
+                          ? (player.id === 1 ? '/shockedRowan.svg' : '/shockedIsolde.svg')
+                          : (player.id === 1 ? '/RowanPlayerToken.svg' : '/IsolderPlayerToken.svg')
+                      }
                       alt={player.id === 1 ? 'Sir Rowan Token' : 'Lady Isolde Token'}
                       style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                     />

@@ -821,6 +821,10 @@ kbd {
 .token-falling {
   animation: token-fall-in 0.55s ease-in forwards;
   transform-origin: center center;
+  width: calc(var(--player-size) + 5px) !important;
+  height: calc(var(--player-size) + 5px) !important;
+  min-width: calc(42px + 5px) !important;
+  z-index: 10 !important;
 }
 
 .ladder-badge {
