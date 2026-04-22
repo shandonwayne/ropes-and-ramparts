@@ -64,28 +64,6 @@ const ChutesLaddersGame: React.FC = () => {
       if (!boardRef.current) return;
       const newRopePositions: Array<{ start: number; end: number; style: React.CSSProperties }> = [];
 
-      Object.entries(GAME_CONFIG.chutes).forEach(([start, end]) => {
-        const startPos = parseInt(start);
-        const ropePos = calculateRopePosition(startPos, end);
-        if (ropePos) {
-          newRopePositions.push({
-            start: startPos,
-            end,
-            style: {
-              position: 'absolute',
-              left: `${ropePos.left}px`,
-              top: `${ropePos.top}px`,
-              width: `${ropePos.width}px`,
-              height: '18px',
-              transform: `rotate(${ropePos.angle}deg)`,
-              transformOrigin: '0 50%',
-              pointerEvents: 'none',
-              zIndex: 50,
-            },
-          });
-        }
-      });
-
       Object.entries(GAME_CONFIG.ladders).forEach(([start, end]) => {
         const startPos = parseInt(start);
         const ropePos = calculateRopePosition(startPos, end);
@@ -281,7 +259,10 @@ const ChutesLaddersGame: React.FC = () => {
     if (GAME_CONFIG.chutes[newPosition]) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       eventFrom = newPosition;
-      eventTo = GAME_CONFIG.chutes[newPosition];
+      // Random destination: anywhere from 1 to (eventFrom - 1), at least 10 squares below
+      const minDrop = Math.min(10, eventFrom - 1);
+      const randomDrop = minDrop + Math.floor(Math.random() * (eventFrom - minDrop - 1));
+      eventTo = Math.max(1, eventFrom - randomDrop);
       const drop = eventFrom - eventTo;
 
       if (currentPlayer.id === 1) setPlayer1State('failure');
@@ -438,7 +419,7 @@ const ChutesLaddersGame: React.FC = () => {
             data-position={gamePosition}
           >
             <span className="square-number">{gamePosition}</span>
-            {hasChute && <span className="square-badge chute-badge">&#x25BC;</span>}
+            {hasChute && <div className="hole-overlay" />}
             {hasLadder && <span className="square-badge ladder-badge">&#x25B2;</span>}
             <div className="players-container">
               {playersHere.map((player) => (
@@ -590,13 +571,11 @@ const ChutesLaddersGame: React.FC = () => {
         <div className="game-board" ref={boardRef} style={{ position: 'relative' }}>
           {renderBoard()}
           {ropePositions.map((rope) => {
-            const isChute = !!GAME_CONFIG.chutes[rope.start];
             const w = parseFloat(rope.style.width as string);
             const h = 18;
             const period = 22;
             const amp = 3.5;
             const cy = h / 2;
-            // Build sinusoidal path for two strands offset by half period
             const buildStrand = (phaseOffset: number) => {
               let d = `M 0 ${cy}`;
               for (let x = 0; x <= w; x += 2) {
@@ -608,60 +587,27 @@ const ChutesLaddersGame: React.FC = () => {
             const strand1 = buildStrand(0);
             const strand2 = buildStrand(period / 2);
             const strand3 = buildStrand(period / 4);
-
-            if (isChute) {
-              return (
-                <svg
-                  key={`rope-${rope.start}-${rope.end}`}
-                  style={{ ...rope.style, overflow: 'visible', display: 'block' }}
-                  width={w}
-                  height={h}
-                  viewBox={`0 0 ${w} ${h}`}
-                >
-                  <defs>
-                    <filter id={`shadow-chute-${rope.start}`} x="-5%" y="-40%" width="110%" height="180%">
-                      <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="rgba(0,0,0,0.5)" />
-                    </filter>
-                  </defs>
-                  {/* Core strand */}
-                  <path d={strand3} stroke="rgba(55,45,38,0.6)" strokeWidth="5" fill="none" strokeLinecap="round" />
-                  {/* Two main twisted strands */}
-                  <path d={strand1} stroke="#6b5a4e" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-chute-${rope.start})`} />
-                  <path d={strand2} stroke="#8a7060" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-chute-${rope.start})`} />
-                  {/* Highlight strand */}
-                  <path d={strand3} stroke="rgba(160,130,110,0.45)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                  {/* End knot circles */}
-                  <circle cx="3" cy={cy} r="4" fill="#5a4a3f" stroke="#8a7060" strokeWidth="1" />
-                  <circle cx={w - 3} cy={cy} r="4" fill="#5a4a3f" stroke="#8a7060" strokeWidth="1" />
-                </svg>
-              );
-            } else {
-              return (
-                <svg
-                  key={`rope-${rope.start}-${rope.end}`}
-                  style={{ ...rope.style, overflow: 'visible', display: 'block' }}
-                  width={w}
-                  height={h}
-                  viewBox={`0 0 ${w} ${h}`}
-                >
-                  <defs>
-                    <filter id={`shadow-ladder-${rope.start}`} x="-5%" y="-40%" width="110%" height="180%">
-                      <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="rgba(0,0,0,0.4)" />
-                    </filter>
-                  </defs>
-                  {/* Core strand */}
-                  <path d={strand3} stroke="rgba(140,80,10,0.5)" strokeWidth="5" fill="none" strokeLinecap="round" />
-                  {/* Two main twisted strands */}
-                  <path d={strand1} stroke="#D4851A" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
-                  <path d={strand2} stroke="#F5A030" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
-                  {/* Highlight strand */}
-                  <path d={strand3} stroke="rgba(255,210,120,0.5)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                  {/* End knot circles */}
-                  <circle cx="3" cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
-                  <circle cx={w - 3} cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
-                </svg>
-              );
-            }
+            return (
+              <svg
+                key={`rope-${rope.start}-${rope.end}`}
+                style={{ ...rope.style, overflow: 'visible', display: 'block' }}
+                width={w}
+                height={h}
+                viewBox={`0 0 ${w} ${h}`}
+              >
+                <defs>
+                  <filter id={`shadow-ladder-${rope.start}`} x="-5%" y="-40%" width="110%" height="180%">
+                    <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="rgba(0,0,0,0.4)" />
+                  </filter>
+                </defs>
+                <path d={strand3} stroke="rgba(140,80,10,0.5)" strokeWidth="5" fill="none" strokeLinecap="round" />
+                <path d={strand1} stroke="#D4851A" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
+                <path d={strand2} stroke="#F5A030" strokeWidth="3.5" fill="none" strokeLinecap="round" filter={`url(#shadow-ladder-${rope.start})`} />
+                <path d={strand3} stroke="rgba(255,210,120,0.5)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                <circle cx="3" cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
+                <circle cx={w - 3} cy={cy} r="4" fill="#B36A10" stroke="#F5A030" strokeWidth="1" />
+              </svg>
+            );
           })}
           <FloatingIndicators indicators={indicators} />
         </div>

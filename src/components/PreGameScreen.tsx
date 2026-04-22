@@ -105,7 +105,7 @@ export default function PreGameScreen({ onStart, leaderboard, leaderboardLoading
               </div>
               <div className="rule-item">
                 <span className="rule-number">3</span>
-                <p>Land on the top of a <span className="text-chute">chute</span> and slide down to a lower square.</p>
+                <p>Land on a <span className="text-chute">hole</span> and fall down to a random lower square!</p>
               </div>
               <div className="rule-item">
                 <span className="rule-number">4</span>

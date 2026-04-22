@@ -20,7 +20,7 @@ export default function MoveLog({ entries, playerId }: MoveLogProps) {
     if (entry.event === 'win') return `Reached 100 -- Victory!`;
     let msg = `Rolled ${entry.roll} → ${entry.toPosition}`;
     if (entry.event === 'chute' && entry.eventFrom !== undefined && entry.eventTo !== undefined) {
-      msg += ` ↓ Chute to ${entry.eventTo}`;
+      msg += ` ↓ Hole to ${entry.eventTo}`;
     }
     if (entry.event === 'ladder' && entry.eventFrom !== undefined && entry.eventTo !== undefined) {
       msg += ` ↑ Ladder to ${entry.eventTo}`;
